@@ -1,5 +1,5 @@
 /* same-folder offline cache only */
-var CACHE_NAME = "ichikyu-cache-v1";
+var CACHE_NAME = "ichikyu-cache-v2";
 var SCOPE_URL = new URL("./", self.location.href);
 var CORE_ASSETS = [
   "./index.html",
