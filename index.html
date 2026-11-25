@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="一級建築士">
+<meta name="theme-color" content="#1E4D6B">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<title>一級建築士 過去問</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" href="./icon-192.png">
+<style>
+:root, [data-theme="light"] {
+  --accent: #1E4D6B;
+  --accent2: #163A52;
+  --header-1: #3A7A9A;
+  --header-2: #1E4D6B;
+  --bg: #F2F2F7;
+  --card: #FFFFFF;
+  --text: #1C1C1E;
+  --sub: #6E6E73;
+  --border: rgba(0,0,0,0.10);
+  --tabbar-bg: #FFFFFF;
+  --tabbar-border: rgba(0,0,0,0.08);
+  --tab-pill-bg: rgba(30,77,107,0.12);
+  --soft: rgba(30,77,107,0.10);
+  --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.05);
+  --danger: #E5372C;
+  --danger-soft: #FFF0EF;
+  --warn: #A3660A;
+  --warn-soft: #FFF3D6;
+  --ok: #1DA851;
+  --ok-soft: #E9F8EE;
+  --undet-fill: #C7C7CC;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+}
+html[data-theme="dark"] {
+  --accent: #7DB3D1;
+  --accent2: #9CC6DE;
+  --header-1: #7DB3D1;
+  --header-2: #3A7A9A;
+  --bg: #000000;
+  --card: #1C1E22;
+  --text: #F2F2F7;
+  --sub: #98989F;
+  --border: rgba(255,255,255,0.10);
+  --tabbar-bg: #1C1E22;
+  --tabbar-border: rgba(255,255,255,0.10);
+  --tab-pill-bg: rgba(125,179,209,0.18);
+  --soft: rgba(125,179,209,0.16);
+  --shadow: 0 8px 24px rgba(0,0,0,0.4);
+  --danger: #FF453A;
+  --danger-soft: rgba(255,69,58,0.14);
+  --warn: #E7B169;
+  --warn-soft: #3A2E14;
+  --ok: #30D158;
+  --ok-soft: rgba(48,209,88,0.14);
+  --undet-fill: #48484A;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; min-width: 0; }
+html { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg); color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
+  font-size: 15px; line-height: 1.5;
+  overflow-x: hidden; overflow-wrap: anywhere;
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+button, input, select, textarea { font-family: inherit; font-size: 15px; color: inherit; }
+input, select { font-size: 16px; }
+button { cursor: pointer; appearance: none; background: none; border: 0; padding: 0; margin: 0; }
+button, a, input, select, textarea, label, summary, details { touch-action: manipulation; }
+img { max-width: 100%; height: auto; }
+#app { min-height: 100vh; max-width: 600px; margin: 0 auto; padding-bottom: calc(100px + var(--safe-b)); min-width: 0; }
+.appbar {
+  padding: calc(10px + var(--safe-t)) 14px 10px;
+  background: var(--bg); color: var(--text);
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+.appbar-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+.appbar-text { flex: 1; min-width: 0; }
+.appbar h1 { margin: 0; font-size: 17px; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.appbar p { margin: 2px 0 0; font-size: 11px; color: var(--sub); overflow-wrap: anywhere; }
+.appbar .icon-btn, .icon-btn {
+  flex: none; width: 38px; height: 38px; border-radius: 50%;
+  display: grid; place-items: center; color: var(--sub);
+  background: var(--card); border: 1px solid var(--border);
+}
+.appbar .icon-btn svg { width: 18px; height: 18px; }
+#main { padding: 14px; overflow-x: hidden; min-width: 0; }
+.tab-page { display: none; min-width: 0; }
+.tab-page.active { display: block; }
+.section-h { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 18px 0 10px; min-width: 0; }
+.section-h:first-child { margin-top: 0; }
+.section-h h2 { margin: 0; font-size: 13px; font-weight: 700; color: var(--sub); letter-spacing: .04em; }
+.section-h .sub { font-size: 12px; color: var(--sub); text-align: right; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; min-width: 0; margin-bottom: 12px; }
+.card.padded { padding: 14px; }
+.row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; min-width: 0; border-top: 1px solid var(--border); }
+.row:first-child { border-top: 0; }
+button.row { width: 100%; text-align: left; }
+.grow { flex: 1 1 auto; min-width: 0; }
+.row-title { font-size: 15px; font-weight: 700; overflow-wrap: anywhere; word-break: break-word; }
+.row-meta { font-size: 12.5px; color: var(--sub); margin-top: 2px; overflow-wrap: anywhere; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; min-width: 0; }
+.chip { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 2px 8px; border-radius: 8px; background: var(--soft); color: var(--accent); max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.chip.danger { background: var(--danger-soft); color: var(--danger); }
+.chip.ok { background: var(--ok-soft); color: var(--ok); }
+.chip.gray { background: var(--border); color: var(--sub); }
+.empty { padding: 26px 14px; text-align: center; color: var(--sub); font-size: 13.5px; }
+.btn, .primary, .secondary, .danger-btn, .ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 44px; padding: 0 14px; border-radius: 14px; font-size: 14.5px; font-weight: 600;
+  width: 100%; border: 1px solid var(--border); background: var(--card); color: var(--text);
+  text-align: center;
+}
+.primary { background: linear-gradient(135deg, var(--header-1), var(--header-2)); color: #fff; border: none; box-shadow: 0 6px 18px rgba(30,77,107,0.35); }
+.secondary { background: var(--card); }
+.danger-btn { background: var(--danger-soft); color: var(--danger); border-color: transparent; }
+.ghost { background: transparent; color: var(--sub); border-color: transparent; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.btn-row > * { flex: 1 1 0; min-width: 0; }
+.btn:disabled, .primary:disabled, .secondary:disabled, .danger-btn:disabled { opacity: .45; cursor: default; }
+.btn svg, .primary svg, .secondary svg { width: 18px; height: 18px; flex: none; }
+nav.tabbar {
+  position: fixed; left: calc(12px + var(--safe-l)); right: calc(12px + var(--safe-r));
+  bottom: calc(8px + var(--safe-b)); max-width: 456px; margin: 0 auto;
+  display: flex; gap: 2px; padding: 6px;
+  background: var(--tabbar-bg); border: 1px solid var(--tabbar-border); border-radius: 26px;
+  box-shadow: 0 10px 28px rgba(20, 36, 33, 0.16); z-index: 200;
+}
+html[data-theme="dark"] nav.tabbar { box-shadow: 0 10px 28px rgba(0,0,0,0.45); }
+.tab-btn {
+  flex: 1; min-height: 50px; min-width: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px; background: none; border: none;
+  border-radius: 18px; color: var(--sub); padding: 4px 2px;
+}
+.tab-btn svg { width: 21px; height: 21px; flex: none; }
+.tab-btn span { font-size: 10.5px; line-height: 1.1; font-weight: 600; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tab-btn.active { background: var(--tab-pill-bg); color: var(--accent); }
+#overlay { position: fixed; inset: 0; background: rgba(10,16,15,.45); z-index: 240; display: none; align-items: flex-end; justify-content: center; padding: 0; }
+#overlay.show { display: flex; }
+.sheet { width: 100%; max-width: 520px; max-height: min(88dvh, 88vh); overflow-y: auto; overflow-x: hidden; background: var(--card); border-radius: 20px 20px 0 0; padding: 16px 16px calc(16px + var(--safe-b)); min-width: 0; box-shadow: var(--shadow); }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.sheet h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.sheet h4 { margin: 18px 0 6px; font-size: 13px; font-weight: 700; color: var(--sub); }
+.sheet p.note, p.note { font-size: 12.5px; color: var(--sub); margin: 4px 0; }
+.sheet .icon-btn svg { width: 16px; height: 16px; }
+#toast { position: fixed; left: 50%; bottom: calc(84px + var(--safe-b)); transform: translateX(-50%) translateY(12px); background: var(--text); color: var(--bg); font-size: 13px; font-weight: 650; padding: 8px 14px; border-radius: 999px; opacity: 0; pointer-events: none; z-index: 260; max-width: calc(100% - 28px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: opacity .2s, transform .2s; }
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.hidden { display: none !important; }
+button { transition: transform .15s cubic-bezier(.2,.7,.3,1), background .18s, color .18s; }
+button:active { transform: scale(0.97); }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  button:active { transform: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* 共通の小物 */
+.notice { font-size: 12.5px; border-radius: 12px; padding: 10px 12px; margin: 0 0 12px; overflow-wrap: anywhere; background: var(--soft); color: var(--text); }
+.notice.warn { color: var(--warn); background: var(--warn-soft); font-weight: 600; }
+.notice.danger { color: var(--danger); background: var(--danger-soft); font-weight: 600; }
+.notice b { font-weight: 800; }
+.kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.kpi { background: var(--soft); border-radius: 14px; padding: 10px 8px; text-align: center; min-width: 0; }
+.kpi .v { font-size: 22px; font-weight: 800; line-height: 1.15; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.kpi .v small { font-size: 12px; font-weight: 700; margin-left: 1px; }
+.kpi .l { font-size: 11px; color: var(--sub); font-weight: 600; }
+.bar { position: relative; height: 8px; background: var(--border); border-radius: 6px; overflow: hidden; margin: 10px 0 4px; }
+.bar > i { display: block; height: 100%; background: var(--accent); border-radius: 6px; }
+.bar.ok > i { background: var(--ok); }
+.scorebar { position: relative; margin: 8px 0 2px; }
+.scorebar .bar { margin: 0; height: 10px; }
+.scorebar .mark { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--warn); border-radius: 1px; }
+.small { font-size: 12px; color: var(--sub); }
+.tgls { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.tgl { min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--border); background: var(--card); font-size: 13.5px; font-weight: 600; color: var(--text); max-width: 100%; }
+.tgl.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+html[data-theme="dark"] .tgl.on { color: #0b1a24; }
+.tgl:disabled { opacity: .5; cursor: default; }
+.tgl.mini { min-height: 32px; padding: 0 10px; font-size: 12.5px; }
+.seg { display: flex; background: var(--border); border-radius: 12px; padding: 3px; gap: 3px; min-width: 0; }
+.seg button { flex: 1 1 0; min-width: 0; min-height: 38px; border-radius: 10px; font-size: 13.5px; font-weight: 600; color: var(--sub); padding: 0 4px; }
+.seg button.on { background: var(--card); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+.field-label { font-size: 12.5px; font-weight: 700; color: var(--sub); margin: 14px 0 6px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.field-label:first-child { margin-top: 0; }
+.field-label .lnk { font-size: 12px; color: var(--accent); font-weight: 600; flex: none; }
+.input { width: 100%; min-height: 44px; border: 1px solid var(--border); border-radius: 12px; padding: 0 12px; background: var(--bg); color: var(--text); }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.inl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--sub); font-weight: 600; min-width: 0; }
+.status-line { display: flex; justify-content: space-between; gap: 8px; padding: 8px 0; border-top: 1px solid var(--border); font-size: 13.5px; }
+.status-line:first-child { border-top: 0; }
+.status-line span:first-child { color: var(--sub); }
+.status-line span:last-child { font-weight: 700; text-align: right; }
+
+/* 問題 */
+.q-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12.5px; color: var(--sub); }
+.q-top .lnk { color: var(--accent); font-weight: 600; font-size: 13px; padding: 6px 0; flex: none; }
+.q-meta { font-size: 12px; color: var(--sub); font-weight: 600; }
+.q-stem { font-size: 15.5px; line-height: 1.65; margin: 8px 0 0; white-space: pre-line; }
+.fig { margin: 12px 0 0; }
+.fig button { display: block; width: 100%; padding: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: #fff; }
+.fig img { display: block; width: 100%; max-width: 100%; height: auto; }
+.fig .cap { font-size: 11.5px; color: var(--sub); margin-top: 4px; }
+.choice { display: flex; align-items: flex-start; gap: 10px; width: 100%; text-align: left; padding: 12px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--card); margin-top: 8px; min-height: 44px; color: var(--text); line-height: 1.55; }
+.choice .cn { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); color: var(--accent); font-weight: 800; display: grid; place-items: center; font-size: 13px; margin-top: 1px; }
+.choice .ct { flex: 1 1 auto; min-width: 0; font-size: 14.5px; }
+.choice.sel { border-color: var(--accent); background: var(--soft); }
+.choice.sel .cn { background: var(--accent); color: #fff; }
+.choice.static { cursor: default; }
+details.cx { border: 1.5px solid var(--border); border-radius: 14px; margin-top: 8px; background: var(--card); overflow: hidden; }
+details.cx > summary { list-style: none; display: flex; align-items: flex-start; gap: 10px; padding: 12px; cursor: pointer; min-height: 44px; }
+details.cx > summary::-webkit-details-marker { display: none; }
+details.cx .cn { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--soft); color: var(--accent); font-weight: 800; display: grid; place-items: center; font-size: 13px; margin-top: 1px; }
+details.cx .ct { flex: 1 1 auto; min-width: 0; font-size: 14.5px; line-height: 1.55; }
+details.cx .chev { flex: none; width: 18px; height: 18px; color: var(--sub); margin-top: 4px; transition: transform .2s; }
+details.cx[open] .chev { transform: rotate(180deg); }
+details.cx.is-ans { border-color: var(--ok); background: var(--ok-soft); }
+details.cx.is-ans .cn { background: var(--ok); color: #fff; }
+details.cx.is-miss { border-color: var(--danger); background: var(--danger-soft); }
+details.cx.is-miss .cn { background: var(--danger); color: #fff; }
+.cx-body { padding: 0 12px 12px 48px; font-size: 13.5px; }
+.ex-item { margin-top: 8px; }
+.ex-item:first-child { margin-top: 0; }
+.ex-item .k { font-size: 11.5px; font-weight: 700; color: var(--sub); }
+.ex-item .v { white-space: pre-line; overflow-wrap: anywhere; }
+.mark-ok { color: var(--ok); font-weight: 800; }
+.mark-ng { color: var(--danger); font-weight: 800; }
+.result-banner { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; font-weight: 800; font-size: 16px; margin-top: 12px; }
+.result-banner svg { width: 22px; height: 22px; flex: none; }
+.result-banner.ok { background: var(--ok-soft); color: var(--ok); }
+.result-banner.ng { background: var(--danger-soft); color: var(--danger); }
+.result-banner .rb-sub { font-size: 12.5px; font-weight: 600; color: var(--text); margin-top: 2px; }
+.ex-card { margin-top: 12px; }
+.ex-card h3 { margin: 0 0 8px; font-size: 14px; }
+
+/* 本番 */
+.exam-bar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: 8px; padding: calc(8px + var(--safe-t)) 12px 8px; margin: -14px -14px 12px; background: var(--bg); border-bottom: 1px solid var(--border); }
+.exam-bar .timer { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; color: var(--accent); flex: none; }
+.exam-bar .timer.low { color: var(--danger); }
+.exam-bar .eb-mid { flex: 1 1 auto; min-width: 0; font-size: 11.5px; color: var(--sub); line-height: 1.3; }
+.exam-bar .eb-end { flex: none; width: auto; min-height: 36px; padding: 0 12px; border-radius: 12px; font-size: 13px; }
+.qgrid { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; margin-top: 8px; }
+.qgrid button { min-height: 32px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; font-weight: 700; color: var(--sub); background: var(--card); padding: 0; }
+.qgrid button.done { background: var(--soft); color: var(--accent); }
+.qgrid button.cur { border: 2px solid var(--accent); color: var(--accent); }
+.qgrid button.ok { background: var(--ok-soft); color: var(--ok); }
+.qgrid button.ng { background: var(--danger-soft); color: var(--danger); }
+.set-row { padding: 12px 14px; border-top: 1px solid var(--border); }
+.set-row:first-child { border-top: 0; }
+.set-row .t { font-weight: 700; font-size: 14px; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.set-row .t span:last-child { flex: none; }
+.set-row .d { font-size: 12.5px; color: var(--sub); margin-top: 2px; }
+.set-row.off .t { color: var(--sub); }
+.big-score { font-size: 40px; font-weight: 800; text-align: center; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.big-score small { font-size: 18px; color: var(--sub); }
+
+/* 成績 */
+.subj-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.subj-h .n { font-weight: 800; font-size: 15px; }
+.subj-h .s { font-size: 12px; color: var(--sub); flex: none; }
+.years { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin-top: 10px; }
+.years div { background: var(--soft); border-radius: 8px; padding: 4px 2px; text-align: center; font-size: 11px; line-height: 1.3; color: var(--sub); }
+.years div b { display: block; font-size: 12.5px; color: var(--text); font-variant-numeric: tabular-nums; }
+.dist { font-weight: 800; color: var(--accent); }
+.dist.reach { color: var(--ok); }
+
+/* カレンダー */
+.cal-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.cal-nav .cal-title { font-size: 15px; font-weight: 700; }
+.cal-nav button { flex: none; width: 36px; height: 36px; border-radius: 50%; background: var(--soft); color: var(--accent); display: grid; place-items: center; }
+.cal-nav button svg { width: 16px; height: 16px; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+.cal-dow { font-size: 10.5px; font-weight: 700; color: var(--sub); text-align: center; padding: 0 0 4px; }
+.cal-day { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 50px; padding: 4px 0; border-radius: 8px; background: transparent; }
+.cal-day.blank { pointer-events: none; }
+.cal-num { width: 24px; height: 24px; line-height: 24px; border-radius: 50%; font-size: 13px; font-weight: 600; text-align: center; }
+.cal-day.today .cal-num { background: var(--accent); color: #fff; font-weight: 800; }
+html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
+.cal-day.selected { box-shadow: inset 0 0 0 2px var(--accent); }
+.cal-day.exam .cal-num { box-shadow: inset 0 0 0 2px var(--warn); }
+.cal-cnt { font-size: 10px; font-weight: 700; line-height: 1.2; color: var(--sub); white-space: nowrap; }
+.cal-day.hit .cal-cnt { color: var(--ok); }
+.cal-day.part .cal-cnt { color: var(--accent); }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11.5px; color: var(--sub); margin-top: 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 4px; }
+.legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+/* 図の拡大 */
+.zoom-box { overflow: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: 10px; background: #fff; max-height: 70vh; }
+.zoom-box img { display: block; width: 100%; max-width: none; height: auto; }
+.zoom-box.x2 img { width: 200%; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="appbar">
+    <div class="appbar-row">
+      <div class="appbar-text">
+        <h1 id="appTitle">一級建築士</h1>
+        <p id="appbarSub"></p>
+      </div>
+      <button type="button" class="icon-btn" id="settingsBtn" aria-label="設定" data-act="open-settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
+    </div>
+  </header>
+  <main id="main">
+    <section class="tab-page active" id="page-home"></section>
+    <section class="tab-page" id="page-solve"></section>
+    <section class="tab-page" id="page-review"></section>
+    <section class="tab-page" id="page-stats"></section>
+    <section class="tab-page" id="page-exam"></section>
+  </main>
+  <nav class="tabbar" id="tabbar" aria-label="メイン">
+    <button type="button" class="tab-btn active" data-tab="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg>
+      <span>ホーム</span>
+    </button>
+    <button type="button" class="tab-btn" data-tab="solve">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"></path></svg>
+      <span>解く</span>
+    </button>
+    <button type="button" class="tab-btn" data-tab="review">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path><path d="M12 8v4l3 2"></path></svg>
+      <span>復習</span>
+    </button>
+    <button type="button" class="tab-btn" data-tab="stats">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M12 20V4M20 20v-7"></path></svg>
+      <span>成績</span>
+    </button>
+  </nav>
+</div>
+<div id="overlay" aria-hidden="true">
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle"></div>
+</div>
+<div id="toast" role="status"></div>
+<script>
+/* ダブルタップズーム無効（単語帳と同じ） */
+(function () {
+  try {
+    var lastTouchEnd = 0;
+    function isEditableTarget(el) {
+      if (!el) return false;
+      var tag = el.tagName;
+      return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || el.isContentEditable;
+    }
+    document.addEventListener("touchend", function (e) {
+      if (isEditableTarget(e.target)) return;
+      var now = Date.now();
+      if (now - lastTouchEnd <= 300) e.preventDefault();
+      lastTouchEnd = now;
+    }, { passive: false });
+    document.addEventListener("dblclick", function (e) {
+      if (isEditableTarget(e.target)) return;
+      e.preventDefault();
+    }, { passive: false });
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  "use strict";
+
+  // ===================================================================
+  // 定数
+  // ===================================================================
+  var TZ = "Asia/Tokyo";
+  var APP_VERSION = "v2026.11.25";
+  var K_PROG = "ichikyu_progress_v1";
+  var K_DAILY = "ichikyu_daily_v1";
+  var K_SET = "ichikyu_settings_v1";
+  var K_EXAM = "ichikyu_exam_session_v1";
+  var SUBJ_ORDER = ["計画", "環境設備", "法規", "構造", "施工"];
+  var SUBJ_DISP = { "計画": "計画", "環境設備": "環境・設備", "法規": "法規", "構造": "構造", "施工": "施工" };
+  var BASIC_CUTOFF = { "計画": 11, "環境設備": 11, "法規": 16, "構造": 16, "施工": 13, "総得点": 90 };
+  var TOTAL_MAX = 125;
+  var DEFAULT_EXAM_DATE = "2027-07-25";
+  var EXAM_MIN = 60;
+  var EXAM_COUNT = 20;
+  var INCOMPLETE_MSG = "この問題は誤肢と解説だけ収録。他の選択肢は未収録";
+  var TAB_TITLES = { home: "一級建築士", solve: "解く", review: "復習", stats: "成績", exam: "本番モード" };
+
+  var SVG = {
+    chev: '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>',
+    left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>',
+    right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+    ok: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg>',
+    ng: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>',
+    play: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>',
+    timer: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></svg>',
+    redo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>'
+  };
+
+  // ===================================================================
+  // 状態
+  // ===================================================================
+  var DATA = null, Q = [], QMAP = {}, dataError = "";
+  var progress = loadJSON(K_PROG, {});
+  var daily = loadJSON(K_DAILY, {});
+  var settings = loadSettings();
+  var examSession = loadJSON(K_EXAM, null);
+  var tab = "home";
+  var filt = null;
+  var sess = { solve: null, review: null };
+  var openDetails = {};
+  var examSetup = { mode: "year", year: 2026, years: [] };
+  var examResult = null;
+  var calMonth = null, calSel = null;
+  var examTimer = null;
+
+  function loadJSON(key, def) {
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return def;
+      var v = JSON.parse(raw);
+      return (v && typeof v === "object") ? v : def;
+    } catch (e) { return def; }
+  }
+  function saveJSON(key, v) {
+    try {
+      if (v == null) localStorage.removeItem(key);
+      else localStorage.setItem(key, JSON.stringify(v));
+    } catch (e) {}
+  }
+  function defaultSettings() {
+    return {
+      examDate: DEFAULT_EXAM_DATE,
+      examDateProvisional: true,
+      dailyQuotaOverride: null,
+      quotaMode: "auto",
+      cutoffMode: "basic",
+      cutoff: clone(BASIC_CUTOFF),
+      reviewClearStreak: 1,
+      theme: "light",
+      lastFilter: null
+    };
+  }
+  function loadSettings() {
+    var d = defaultSettings();
+    var s = loadJSON(K_SET, {});
+    Object.keys(d).forEach(function (k) { if (!(k in s)) s[k] = d[k]; });
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(String(s.examDate || ""))) s.examDate = DEFAULT_EXAM_DATE;
+    if (!s.cutoff || typeof s.cutoff !== "object") s.cutoff = clone(BASIC_CUTOFF);
+    Object.keys(BASIC_CUTOFF).forEach(function (k) {
+      var n = parseInt(s.cutoff[k], 10);
+      s.cutoff[k] = isFinite(n) && n >= 0 ? n : BASIC_CUTOFF[k];
+    });
+    var r = parseInt(s.reviewClearStreak, 10);
+    s.reviewClearStreak = isFinite(r) && r >= 1 && r <= 9 ? r : 1;
+    if (["auto", "twice", "manual"].indexOf(s.quotaMode) < 0) s.quotaMode = "auto";
+    if (s.cutoffMode !== "manual") s.cutoffMode = "basic";
+    if (s.theme !== "dark") s.theme = "light";
+    return s;
+  }
+  function saveProgress() { saveJSON(K_PROG, progress); }
+  function saveDaily() { saveJSON(K_DAILY, daily); }
+  function saveSettings() { saveJSON(K_SET, settings); }
+  function saveExam() { saveJSON(K_EXAM, examSession); }
+  function clone(o) { return o == null ? o : JSON.parse(JSON.stringify(o)); }
+
+  // ===================================================================
+  // 日付（Asia/Tokyo）
+  // ===================================================================
+  function getNow() {
+    try {
+      var p = new URLSearchParams(location.search).get("date");
+      if (p && /^\d{4}-\d{2}-\d{2}$/.test(p)) return new Date(p + "T12:00:00+09:00");
+    } catch (e) {}
+    return new Date();
+  }
+  function ymd(d) {
+    return new Intl.DateTimeFormat("en-CA", { timeZone: TZ, year: "numeric", month: "2-digit", day: "2-digit" }).format(d);
+  }
+  function today() { return ymd(getNow()); }
+  function ymdToDate(s) { return new Date(s + "T12:00:00+09:00"); }
+  function addDays(s, n) { return ymd(new Date(ymdToDate(s).getTime() + n * 86400000)); }
+  function daysBetween(a, b) { return Math.round((ymdToDate(b).getTime() - ymdToDate(a).getTime()) / 86400000); }
+  function dowSun0(s) {
+    var w = new Intl.DateTimeFormat("en-US", { timeZone: TZ, weekday: "short" }).format(ymdToDate(s));
+    return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].indexOf(w);
+  }
+  function jpDate(s) {
+    var p = s.split("-");
+    return parseInt(p[0], 10) + "年" + parseInt(p[1], 10) + "月" + parseInt(p[2], 10) + "日（" + "日月火水木金土".charAt(dowSun0(s)) + "）";
+  }
+  function mmss(ms) {
+    if (ms < 0) ms = 0;
+    var t = Math.ceil(ms / 1000), m = Math.floor(t / 60), s = t % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  // ===================================================================
+  // 小物
+  // ===================================================================
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { el.classList.remove("show"); }, 1800);
+  }
+  function openSheet(html) {
+    document.getElementById("sheet").innerHTML = html;
+    var ov = document.getElementById("overlay");
+    ov.classList.add("show");
+    ov.setAttribute("aria-hidden", "false");
+  }
+  function closeSheet() {
+    var ov = document.getElementById("overlay");
+    ov.classList.remove("show");
+    ov.setAttribute("aria-hidden", "true");
+    document.getElementById("sheet").innerHTML = "";
+  }
+  function sheetHead(title) {
+    return '<div class="sheet-head"><h3 id="sheetTitle">' + esc(title) + '</h3><button type="button" class="icon-btn" data-act="close-sheet" aria-label="閉じる">' + SVG.close + "</button></div>";
+  }
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; }
+    return a;
+  }
+  function pct(a, b) { return b ? Math.round(a / b * 100) : 0; }
+  function qLabel(q) { return SUBJ_DISP[q.subject] + " " + q.year + "年 No." + q.number; }
+  function confChip(c) {
+    if (c === "要確認") return '<span class="chip warn">確度: 要確認（解説の裏付けが弱い）</span>';
+    if (c) return '<span class="chip gray">確度: ' + esc(c) + "</span>";
+    return "";
+  }
+  function subjQs(s) { return Q.filter(function (q) { return q.subject === s; }); }
+  function recordedSubjects() { return SUBJ_ORDER.filter(function (s) { return subjQs(s).length > 0; }); }
+  function yearsOf(subjs) {
+    var m = {};
+    Q.forEach(function (q) { if (!subjs || subjs.indexOf(q.subject) >= 0) m[q.year] = 1; });
+    return Object.keys(m).map(Number).sort();
+  }
+  function fieldsOf(subjs) {
+    var m = {};
+    Q.forEach(function (q) { if (subjs.indexOf(q.subject) >= 0) m[q.field] = (m[q.field] || 0) + 1; });
+    return Object.keys(m).sort(function (a, b) { return m[b] - m[a]; });
+  }
+  function cutoffOf(k) { return settings.cutoffMode === "manual" ? settings.cutoff[k] : BASIC_CUTOFF[k]; }
+  function cutoffLabel() {
+    return settings.cutoffMode === "manual"
+      ? "合格基準点は手入力の値。令和9年の公式基準は未発表。"
+      : "令和9年の公式基準は未発表。基本水準（各科目過半＋総得点90）で表示している。";
+  }
+  function examDateLabel() {
+    return settings.examDate + (settings.examDateProvisional ? "（仮／公式日程は未発表）" : "");
+  }
+  function isCorrectChoice(q, n) { return q.answers.indexOf(n) >= 0; }
+
+  // ===================================================================
+  // 記録
+  // ===================================================================
+  function applyResult(prev, correct, unsure) {
+    var t = today();
+    var p = prev ? clone(prev) : { attempts: 0, correctCount: 0, lastResult: null, unsure: false, lastAt: null };
+    p.attempts = (p.attempts || 0) + 1;
+    if (correct) {
+      p.correctCount = (p.correctCount || 0) + 1;
+      if (!p.firstCorrectAt) p.firstCorrectAt = t;
+    }
+    p.lastResult = correct ? "correct" : "wrong";
+    p.unsure = !!unsure;
+    p.lastAt = t;
+    p.cleared = false;
+    if (!correct || unsure) { p.review = true; p.streak = 0; }
+    else if (p.review) {
+      p.streak = (p.streak || 0) + 1;
+      if (p.streak >= settings.reviewClearStreak) { p.review = false; p.streak = 0; p.cleared = true; }
+    }
+    return p;
+  }
+  function addDaily(answered, correct) {
+    var t = today();
+    var qi = quotaInfo();
+    var r = daily[t] || { answered: 0, correct: 0 };
+    r.answered += answered;
+    r.correct += correct;
+    if (!qi.expired && qi.quota != null) r.quota = qi.quota;
+    daily[t] = r;
+  }
+  function isSolved(id) { var p = progress[id]; return !!(p && p.correctCount > 0); }
+  function isCorrectNow(id) { var p = progress[id]; return !!(p && p.lastResult === "correct"); }
+  function inReview(id) { var p = progress[id]; return !!(p && p.review); }
+
+  // ===================================================================
+  // ノルマ
+  // ===================================================================
+  function quotaInfo() {
+    var t = today();
+    var rec = daily[t] || { answered: 0, correct: 0 };
+    var days = daysBetween(t, settings.examDate);
+    var info = { today: t, rec: rec, days: days, expired: days < 0, quota: null, basis: "" };
+    if (info.expired) return info;
+    var denom = Math.max(1, days);
+    var N = Q.length;
+    if (settings.quotaMode === "manual" && settings.dailyQuotaOverride > 0) {
+      info.quota = settings.dailyQuotaOverride;
+      info.basis = "手入力の値（設定で変更）";
+    } else if (settings.quotaMode === "twice") {
+      var done2 = 0;
+      Q.forEach(function (q) { var p = progress[q.id]; if (p) done2 += Math.min(2, p.attempts || 0); });
+      var remain = Math.min(2 * N, Math.max(0, 2 * N - done2 + rec.answered));
+      info.quota = Math.ceil(remain / denom);
+      info.basis = "全問を2周: 残り " + remain + "回 ÷ 残り " + denom + "日";
+    } else {
+      var unsolved = Q.filter(function (q) {
+        var p = progress[q.id];
+        return !p || !(p.correctCount > 0) || p.firstCorrectAt === t;
+      }).length;
+      info.quota = Math.ceil(unsolved / denom);
+      info.basis = "まだ正解していない収録問題 " + unsolved + "問 ÷ 残り " + denom + "日";
+    }
+    return info;
+  }
+
+  // ===================================================================
+  // 解く：絞り込み
+  // ===================================================================
+  function defaultFilter() {
+    return { subjects: ["計画"], years: [], fields: [], unansweredFirst: true, random: false, onlyCheck: false, onlyComplete: false };
+  }
+  function normFilter(f) {
+    var d = defaultFilter();
+    f = f && typeof f === "object" ? clone(f) : d;
+    Object.keys(d).forEach(function (k) { if (!(k in f)) f[k] = d[k]; });
+    var rec = recordedSubjects();
+    f.subjects = (f.subjects || []).filter(function (s) { return rec.indexOf(s) >= 0; });
+    if (!f.subjects.length && rec.length) f.subjects = [rec[0]];
+    return f;
+  }
+  function matchFilter(q, f) {
+    if (f.subjects.indexOf(q.subject) < 0) return false;
+    if (f.years.length && f.years.indexOf(q.year) < 0) return false;
+    if (f.fields.length && f.fields.indexOf(q.field) < 0) return false;
+    if (f.onlyCheck && q.confidence !== "要確認") return false;
+    if (f.onlyComplete && !q.choicesComplete) return false;
+    return true;
+  }
+  function orderQs(list, random, unansweredFirst) {
+    list = list.slice().sort(function (a, b) {
+      return SUBJ_ORDER.indexOf(a.subject) - SUBJ_ORDER.indexOf(b.subject) || a.year - b.year || a.number - b.number;
+    });
+    if (random) shuffle(list);
+    if (!unansweredFirst) return list;
+    var un = [], wr = [], rest = [];
+    list.forEach(function (q) {
+      var p = progress[q.id];
+      if (!p || !p.attempts) un.push(q);
+      else if (p.lastResult === "wrong") wr.push(q);
+      else rest.push(q);
+    });
+    return un.concat(wr, rest);
+  }
+  function newCur(id) { return { qid: id, choice: null, done: false, correct: null, unsure: false, pBefore: null, revealed: false }; }
+  function startSession(where, ids, label) {
+    if (!ids.length) { toast("該当する問題がありません"); return; }
+    sess[where] = { queue: ids, idx: 0, cur: newCur(ids[0]), n: 0, c: 0, label: label || "", finished: false };
+    openDetails = {};
+  }
+  function startSolve(f) {
+    f = normFilter(f || filt);
+    settings.lastFilter = clone(f);
+    saveSettings();
+    var ids = orderQs(Q.filter(function (q) { return matchFilter(q, f); }), f.random, f.unansweredFirst).map(function (q) { return q.id; });
+    startSession("solve", ids, filterSummary(f));
+    switchTab("solve", true);
+  }
+  function filterSummary(f) {
+    var s = f.subjects.map(function (x) { return SUBJ_DISP[x]; }).join("・");
+    s += " / " + (f.years.length ? f.years.slice().sort().join(",") + "年" : "全年度");
+    if (f.fields.length) s += " / " + f.fields.join("・");
+    if (f.onlyCheck) s += " / 要確認のみ";
+    if (f.onlyComplete) s += " / 4肢そろいのみ";
+    return s;
+  }
+
+  // ===================================================================
+  // 解答
+  // ===================================================================
+  function finalize(where) {
+    var s = sess[where], c = s.cur;
+    c.done = true;
+    c.pBefore = progress[c.qid] ? clone(progress[c.qid]) : null;
+    var wasReview = !!(c.pBefore && c.pBefore.review);
+    progress[c.qid] = applyResult(c.pBefore, c.correct, c.unsure);
+    addDaily(1, c.correct ? 1 : 0);
+    s.n++; if (c.correct) s.c++;
+    saveProgress(); saveDaily();
+    var q = QMAP[c.qid];
+    openDetails = {};
+    q.choices.forEach(function (ch) {
+      if (ch.n === c.choice || isCorrectChoice(q, ch.n) || !q.choicesComplete) openDetails[q.id + ":" + ch.n] = true;
+    });
+    if (wasReview && progress[c.qid].cleared) toast("復習リストから外しました");
+    render();
+  }
+  function setUnsure(where, v) {
+    var s = sess[where]; if (!s || !s.cur) return;
+    var c = s.cur;
+    c.unsure = v;
+    if (c.done) {
+      progress[c.qid] = applyResult(c.pBefore, c.correct, c.unsure);
+      saveProgress();
+    }
+    render();
+  }
+  function nextQ(where) {
+    var s = sess[where]; if (!s) return;
+    s.idx++;
+    openDetails = {};
+    if (s.idx >= s.queue.length) { s.cur = null; s.finished = true; }
+    else s.cur = newCur(s.queue[s.idx]);
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  // ===================================================================
+  // 描画：問題
+  // ===================================================================
+  function renderFigs(q) {
+    if (!q.images || !q.images.length) return "";
+    return q.images.map(function (src, i) {
+      return '<div class="fig"><button type="button" data-act="zoom" data-src="' + esc(src) + '" aria-label="図を拡大"><img src="' + esc(src) + '" alt="' + esc(qLabel(q)) + ' の図' + (i + 1) + '" loading="lazy"></button><div class="cap">図（タップで拡大）</div></div>';
+    }).join("");
+  }
+  function exItem(k, v, cls) {
+    if (v == null || String(v).trim() === "") return "";
+    return '<div class="ex-item' + (cls ? " " + cls : "") + '"><div class="k">' + esc(k) + '</div><div class="v">' + esc(v) + "</div></div>";
+  }
+  function stmtMark(ok) {
+    return ok ? '<span class="mark-ok">○ 正しい記述</span>' : '<span class="mark-ng">× 誤りの記述</span>';
+  }
+  // 選択肢ごとの解説（解答後・結果確認で使う）
+  function renderChoiceDetail(q, ch, chosen) {
+    var key = q.id + ":" + ch.n;
+    var isAns = isCorrectChoice(q, ch.n);
+    var cls = "cx";
+    if (isAns) cls += " is-ans";
+    else if (chosen === ch.n) cls += " is-miss";
+    var badges = "";
+    if (isAns) badges += '<span class="chip ok">正答</span>';
+    if (chosen === ch.n) badges += '<span class="chip ' + (isAns ? "ok" : "danger") + '">あなたの解答</span>';
+    badges += ch.statementOk ? '<span class="chip gray">記述 ○</span>' : '<span class="chip gray">記述 ×</span>';
+    if (ch.confidence === "要確認") badges += '<span class="chip warn">要確認</span>';
+    var body = "";
+    body += '<div class="ex-item"><div class="k">記述の正誤</div><div class="v">' + stmtMark(ch.statementOk) + "</div></div>";
+    body += exItem(ch.statementOk ? "解説" : "どこが誤りか（解説）", ch.why);
+    body += exItem("正しい内容", ch.correction);
+    body += exItem("根拠", ch.source);
+    if (!ch.why && !ch.correction && !ch.source) body += '<div class="ex-item"><div class="v small">この肢の個別解説は未収録。下の「問題全体の解説」を参照。</div></div>';
+    body += '<div class="ex-item"><div class="k">確度</div><div class="v">' + (ch.confidence === "要確認" ? '<span class="chip warn">要確認</span>' : esc(ch.confidence || "—")) + "</div></div>";
+    return '<details class="' + cls + '" data-dk="' + esc(key) + '"' + (openDetails[key] ? " open" : "") + '><summary><span class="cn">' + ch.n + '</span><span class="ct">' + esc(ch.text) + '<span class="chips">' + badges + "</span></span>" + SVG.chev + '</summary><div class="cx-body">' + body + "</div></details>";
+  }
+  function multiAnswerNote(q) {
+    if (q.answers.length < 2) return "";
+    return '<div class="notice warn">公式は肢' + q.answers.join("と肢") + "の両方が正答。どれか一方を選べば正解。</div>";
+  }
+  function renderWholeExplanation(q) {
+    var h = '<div class="card padded ex-card"><h3>問題全体の解説</h3>';
+    h += '<div class="ex-item"><div class="k">公式正答</div><div class="v">' + esc(q.answerNote || ("正答 " + q.answers.join("・"))) + "</div></div>";
+    if (q.answers.length > 1) h += '<div class="ex-item"><div class="v"><b>公式は肢' + q.answers.join("と肢") + "の両方が正答</b></div></div>";
+    h += exItem("問題の趣旨", q.intent);
+    h += exItem("どこが誤りか", q.wrongPoint);
+    h += exItem("正しい内容", q.correctContent);
+    h += exItem("根拠", q.source);
+    h += '<div class="ex-item"><div class="k">確度</div><div class="v">' + (q.confidence === "要確認" ? '<span class="chip warn">要確認</span> 解説の根拠が弱い。公式資料で確かめること。' : esc(q.confidence || "—")) + "</div></div>";
+    h += exItem("備考", q.note);
+    h += "</div>";
+    return h;
+  }
+  function renderQHead(q) {
+    var h = '<div class="q-meta">' + esc(qLabel(q)) + " ・ " + esc(q.field) + "</div>";
+    var chips = "";
+    if (q.confidence === "要確認") chips += '<span class="chip warn">要確認：解説の確度が低い</span>';
+    if (q.hasFigure) chips += '<span class="chip gray">図あり</span>';
+    if (!q.choicesComplete) chips += '<span class="chip warn">誤肢と解説だけ収録</span>';
+    if (inReview(q.id)) chips += '<span class="chip danger">復習リスト</span>';
+    if (chips) h += '<div class="chips">' + chips + "</div>";
+    h += '<p class="q-stem">' + esc(q.stem) + "</p>";
+    h += renderFigs(q);
+    return h;
+  }
+  function unsureSeg(where, c) {
+    return '<div class="field-label">手ごたえ</div><div class="seg" role="group" aria-label="自信">' +
+      '<button type="button" class="' + (!c.unsure ? "on" : "") + '" data-act="unsure" data-where="' + where + '" data-v="0">自信あり</button>' +
+      '<button type="button" class="' + (c.unsure ? "on" : "") + '" data-act="unsure" data-where="' + where + '" data-v="1">自信なし</button></div>' +
+      '<p class="note">自信なしは正解でも復習に入る。</p>';
+  }
+  function renderQuestion(where, s) {
+    var c = s.cur, q = QMAP[c.qid];
+    var h = '<div class="q-top"><span>' + (s.idx + 1) + " / " + s.queue.length + "問" + (s.n ? "　正解 " + s.c + " / " + s.n : "") + '</span><button type="button" class="lnk" data-act="end-session" data-where="' + where + '">' + (where === "review" ? "復習一覧へ" : "条件を変える") + "</button></div>";
+    h += '<div class="card padded">' + renderQHead(q);
+    if (!q.choicesComplete) {
+      h += '<div class="notice warn" style="margin-top:12px">' + INCOMPLETE_MSG + "。</div>";
+    }
+    if (!c.done && q.choicesComplete) {
+      q.choices.forEach(function (ch) {
+        h += '<button type="button" class="choice" data-act="answer" data-where="' + where + '" data-n="' + ch.n + '"><span class="cn">' + ch.n + '</span><span class="ct">' + esc(ch.text) + "</span></button>";
+      });
+    } else if (!c.done && !q.choicesComplete) {
+      var ch0 = q.choices[0];
+      if (!c.revealed) {
+        q.choices.forEach(function (ch) {
+          h += '<div class="choice static"><span class="cn">' + ch.n + '</span><span class="ct">' + esc(ch.text) + "</span></div>";
+        });
+        h += '<p class="note">収録されているのは公式正答の肢' + q.answers.join("・") + "だけ。" + (ch0 && ch0.statementOk ? "この記述が正しい理由" : "この記述のどこが誤りか") + "を考えてから解説を開く。</p>";
+        h += '<div class="btn-row"><button type="button" class="primary" data-act="reveal" data-where="' + where + '">解説を見る</button></div>';
+      } else {
+        q.choices.forEach(function (ch) { openDetails[q.id + ":" + ch.n] = true; h += renderChoiceDetail(q, ch, null); });
+        h += '<p class="note">誤りの箇所を言えたかどうかで記録する。</p>';
+        h += '<div class="btn-row"><button type="button" class="btn" data-act="self" data-where="' + where + '" data-v="1">分かった（正解）</button><button type="button" class="btn" data-act="self" data-where="' + where + '" data-v="0">分からなかった</button></div>';
+      }
+    } else {
+      // 解答後
+      h += '<div class="result-banner ' + (c.correct ? "ok" : "ng") + '">' + (c.correct ? SVG.ok : SVG.ng) + '<div><div>' + (c.correct ? "正解" : "不正解") + '</div><div class="rb-sub">' +
+        (q.choicesComplete ? (c.choice != null ? "あなたの解答 肢" + c.choice + "　" : "") : "自己採点　") + esc(q.answerNote || ("正答 " + q.answers.join("・"))) + "</div></div></div>";
+      h += multiAnswerNote(q);
+      h += '<p class="note" style="margin-top:10px">各肢をタップすると、記述の正誤・どこが誤りか・正しい内容・根拠が開く。</p>';
+      q.choices.forEach(function (ch) { h += renderChoiceDetail(q, ch, c.choice); });
+    }
+    h += "</div>";
+    if (c.done || c.revealed) h += renderWholeExplanation(q);
+    h += '<div class="card padded">' + unsureSeg(where, c);
+    if (c.done) {
+      var p = progress[q.id];
+      if (where === "review" && p && !p.review) h += '<p class="note" style="color:var(--ok);font-weight:700">この問題は復習リストから外れた。</p>';
+      else if (p && p.review) h += '<p class="note">復習リスト: 連続 ' + (p.streak || 0) + " / " + settings.reviewClearStreak + " 回正解で外れる。</p>";
+      h += '<div class="btn-row"><button type="button" class="primary" data-act="next" data-where="' + where + '">' + (s.idx + 1 >= s.queue.length ? "結果を見る" : "次の問題へ") + SVG.right + "</button></div>";
+    }
+    h += "</div>";
+    return h;
+  }
+  function renderFinished(where, s) {
+    var h = '<div class="card padded"><div class="subj-h"><span class="n">' + (where === "review" ? "復習" : "このセット") + 'は最後まで解いた</span></div>';
+    h += '<div class="big-score" style="margin-top:10px">' + s.c + "<small> / " + s.n + "</small></div>";
+    h += '<p class="note" style="text-align:center">' + esc(s.label) + "</p>";
+    h += '<div class="btn-row"><button type="button" class="secondary" data-act="end-session" data-where="' + where + '">' + (where === "review" ? "復習一覧へ" : "条件を変える") + '</button>';
+    if (where === "solve") h += '<button type="button" class="primary" data-act="continue">もう一度（未解答優先）</button>';
+    h += "</div></div>";
+    return h;
+  }
+
+  // ===================================================================
+  // 描画：ホーム
+  // ===================================================================
+  function renderQuotaCard() {
+    var qi = quotaInfo();
+    var h = '<div class="section-h"><h2>今日のノルマ</h2><span class="sub">' + esc(jpDate(qi.today)) + "</span></div>";
+    h += '<div class="card padded">';
+    if (qi.expired) {
+      h += '<div class="notice danger">試験日（' + esc(settings.examDate) + "）を過ぎた。試験日を更新してください。</div>";
+      h += '<div class="kpis"><div class="kpi"><div class="v">' + qi.rec.answered + '<small>問</small></div><div class="l">今日解いた</div></div><div class="kpi"><div class="v">' + qi.rec.correct + '<small>問</small></div><div class="l">正解</div></div><div class="kpi"><div class="v">—</div><div class="l">ノルマ停止中</div></div></div>';
+      h += '<div class="btn-row"><button type="button" class="primary" data-act="open-settings">試験日を更新する</button></div>';
+    } else {
+      var done = qi.quota > 0 && qi.rec.answered >= qi.quota;
+      h += '<div class="kpis"><div class="kpi"><div class="v">' + qi.quota + '<small>問</small></div><div class="l">目標</div></div>' +
+        '<div class="kpi"><div class="v">' + qi.rec.answered + '<small>問</small></div><div class="l">達成（正解 ' + qi.rec.correct + "）</div></div>" +
+        '<div class="kpi"><div class="v">' + qi.days + '<small>日</small></div><div class="l">試験まで</div></div></div>';
+      h += '<div class="bar' + (done ? " ok" : "") + '"><i style="width:' + Math.min(100, qi.quota ? pct(qi.rec.answered, qi.quota) : 100) + '%"></i></div>';
+      h += '<p class="note">' + (done ? '<b style="color:var(--ok)">今日のノルマ達成。</b>' : (qi.quota ? "あと " + Math.max(0, qi.quota - qi.rec.answered) + "問。" : "全問正解済み。")) + esc(qi.basis) + "（切り上げ）</p>";
+      h += '<p class="note">試験日 ' + esc(examDateLabel()) + "。本番モードの解答もノルマに入る。</p>";
+    }
+    h += "</div>";
+    return h;
+  }
+  function examSetsHtml(withStart) {
+    var h = '<div class="card">';
+    h += '<div class="set-row"><div class="t"><span>計画のみ（練習）</span><span class="chip ok">できる</span></div><div class="d">20問・60分（按分・目安）。1年分そのまま、または複数年からランダム20問。<br>公式は学科Ⅰ・Ⅱを合わせて2時間で40問。公式は合算時間。按分は目安。</div>' +
+      (withStart ? '<div class="btn-row"><button type="button" class="primary" data-act="go-exam">' + SVG.timer + "本番モードへ</button></div>" : "") + "</div>";
+    h += '<div class="set-row off"><div class="t"><span>学科Ⅰ・Ⅱ（計画＋環境・設備）</span><span class="chip gray">選べない</span></div><div class="d">40問・120分。環境・設備が未収録のため不可。計画20問・按分60分の練習だけ出す。</div></div>';
+    h += '<div class="set-row off"><div class="t"><span>学科Ⅲ（法規）</span><span class="chip gray">選べない</span></div><div class="d">30問・105分。法規が未収録のため不可。</div></div>';
+    h += '<div class="set-row off"><div class="t"><span>学科Ⅳ・Ⅴ（構造＋施工）</span><span class="chip gray">選べない</span></div><div class="d">55問・165分。構造が未収録。施工は4肢がそろっているのが3問だけで本番にならない。施工の本番は4肢がそろってから有効。</div></div>';
+    h += '<div class="set-row off"><div class="t"><span>全科目125問</span><span class="chip gray">作らない</span></div><div class="d">データ不足のため、全収録から125問相当のセットは作らない。</div></div>';
+    h += "</div>";
+    return h;
+  }
+  function renderHome() {
+    var el = document.getElementById("page-home");
+    if (!DATA) { el.innerHTML = '<div class="empty">' + esc(dataError || "問題データを読み込み中") + "</div>"; return; }
+    var h = renderQuotaCard();
+    if (examSession) {
+      h += '<div class="card padded"><div class="subj-h"><span class="n">本番モードの途中</span><span class="s">残り ' + mmss(examSession.endsAt - Date.now()) + '</span></div><div class="btn-row"><button type="button" class="primary" data-act="go-exam">' + SVG.play + "再開する</button></div></div>";
+    }
+    var rv = Q.filter(function (q) { return inReview(q.id); }).length;
+    var lf = normFilter(settings.lastFilter || defaultFilter());
+    h += '<div class="section-h"><h2>解く</h2></div><div class="card padded">';
+    h += '<button type="button" class="primary" data-act="continue">' + SVG.play + "続きから解く</button>";
+    h += '<p class="note">' + esc(filterSummary(lf)) + "（未解答優先）</p>";
+    h += '<div class="btn-row"><button type="button" class="secondary" data-act="tab" data-tab="solve">条件を選ぶ</button><button type="button" class="secondary" data-act="tab" data-tab="review">復習 ' + rv + "問</button></div></div>";
+
+    h += '<div class="section-h"><h2>本番モード</h2></div>';
+    h += examSetsHtml(true);
+
+    h += '<div class="section-h"><h2>収録データ</h2></div><div class="card">';
+    SUBJ_ORDER.forEach(function (s) {
+      var list = subjQs(s), meta = DATA.subjects[s] || {};
+      var full = list.filter(function (q) { return q.choicesComplete; }).length;
+      var d;
+      if (!list.length) d = '<span class="chip gray">未収録</span> 誤り選択肢＋解説のデータが無い。問題は出さない。';
+      else if (full === list.length) d = list.length + "問（" + yearsOf([s])[0] + "–" + yearsOf([s]).slice(-1)[0] + "年）すべて4肢あり。";
+      else d = list.length + "問のうち4肢そろいは" + full + "問。残り" + (list.length - full) + "問は誤肢と解説だけ収録（自己採点で解く）。";
+      h += '<div class="row"><div class="grow"><div class="row-title">' + esc(meta.fullLabel || s) + '</div><div class="row-meta">' + d + "</div></div></div>";
+    });
+    h += "</div>";
+    el.innerHTML = h;
+  }
+
+  // ===================================================================
+  // 描画：解く
+  // ===================================================================
+  function renderSolve() {
+    var el = document.getElementById("page-solve");
+    if (!DATA) { el.innerHTML = '<div class="empty">' + esc(dataError || "問題データを読み込み中") + "</div>"; return; }
+    var s = sess.solve;
+    if (s && s.finished) { el.innerHTML = renderFinished("solve", s); return; }
+    if (s && s.cur) { el.innerHTML = renderQuestion("solve", s); return; }
+    if (!filt) filt = normFilter(settings.lastFilter || defaultFilter());
+    var f = filt;
+    var h = '<div class="card padded">';
+    h += '<div class="field-label">科目</div><div class="tgls">';
+    SUBJ_ORDER.forEach(function (sj) {
+      var has = subjQs(sj).length > 0;
+      h += '<button type="button" class="tgl' + (f.subjects.indexOf(sj) >= 0 ? " on" : "") + '" data-act="f-subj" data-v="' + sj + '"' + (has ? "" : " disabled") + ">" + esc(SUBJ_DISP[sj]) + (has ? "" : "（未収録）") + "</button>";
+    });
+    h += "</div>";
+    if (f.subjects.indexOf("施工") >= 0) h += '<p class="note" style="color:var(--warn)">施工は250問のうち247問が「誤肢と解説だけ収録」。他の選択肢は未収録なので、誤りの箇所を考えて自己採点する。</p>';
+    var ys = yearsOf(f.subjects);
+    h += '<div class="field-label"><span>年度（複数可）</span><button type="button" class="lnk" data-act="f-year-all">' + (f.years.length ? "すべてに戻す" : "すべて") + "</button></div><div class=\"tgls\">";
+    ys.forEach(function (y) {
+      h += '<button type="button" class="tgl mini' + (f.years.indexOf(y) >= 0 ? " on" : "") + '" data-act="f-year" data-v="' + y + '">' + y + "</button>";
+    });
+    h += "</div>";
+    var fs = fieldsOf(f.subjects);
+    h += '<div class="field-label"><span>分野（複数可・未選択はすべて）</span>' + (f.fields.length ? '<button type="button" class="lnk" data-act="f-field-clear">解除</button>' : "") + '</div><div class="tgls">';
+    fs.forEach(function (x) {
+      h += '<button type="button" class="tgl mini' + (f.fields.indexOf(x) >= 0 ? " on" : "") + '" data-act="f-field" data-v="' + esc(x) + '">' + esc(x) + "</button>";
+    });
+    h += "</div>";
+    h += '<div class="field-label">出し方</div><div class="tgls">';
+    h += '<button type="button" class="tgl mini' + (f.unansweredFirst ? " on" : "") + '" data-act="f-opt" data-v="unansweredFirst">未解答優先</button>';
+    h += '<button type="button" class="tgl mini' + (f.random ? " on" : "") + '" data-act="f-opt" data-v="random">ランダム順</button>';
+    h += '<button type="button" class="tgl mini' + (f.onlyCheck ? " on" : "") + '" data-act="f-opt" data-v="onlyCheck">要確認だけ</button>';
+    if (f.subjects.indexOf("施工") >= 0) h += '<button type="button" class="tgl mini' + (f.onlyComplete ? " on" : "") + '" data-act="f-opt" data-v="onlyComplete">4肢そろいだけ</button>';
+    h += "</div>";
+    var list = Q.filter(function (q) { return matchFilter(q, f); });
+    var un = list.filter(function (q) { return !(progress[q.id] && progress[q.id].attempts); }).length;
+    h += '<div class="btn-row" style="margin-top:16px"><button type="button" class="primary" data-act="start-solve"' + (list.length ? "" : " disabled") + ">" + SVG.play + "この条件で解く（" + list.length + "問）</button></div>";
+    h += '<p class="note">該当 ' + list.length + "問・未解答 " + un + "問。年度・番号順" + (f.random ? "をランダムに" : "") + (f.unansweredFirst ? "、未解答→前回不正解→その他の順" : "") + "。</p>";
+    h += "</div>";
+    var unrec = SUBJ_ORDER.filter(function (sj) { return !subjQs(sj).length; }).map(function (x) { return SUBJ_DISP[x]; });
+    if (unrec.length) h += '<p class="note">' + esc(unrec.join("・")) + "は未収録（データが無いので問題は出さない）。</p>";
+    el.innerHTML = h;
+  }
+
+  // ===================================================================
+  // 描画：復習
+  // ===================================================================
+  function renderReview() {
+    var el = document.getElementById("page-review");
+    if (!DATA) { el.innerHTML = '<div class="empty">' + esc(dataError || "問題データを読み込み中") + "</div>"; return; }
+    var s = sess.review;
+    if (s && s.finished) { el.innerHTML = renderFinished("review", s); return; }
+    if (s && s.cur) { el.innerHTML = renderQuestion("review", s); return; }
+    var list = orderQs(Q.filter(function (q) { return inReview(q.id); }), false, false);
+    var nWrong = list.filter(function (q) { return progress[q.id].lastResult === "wrong"; }).length;
+    var nUnsure = list.length - nWrong;
+    var h = '<div class="card padded"><div class="kpis"><div class="kpi"><div class="v">' + list.length + '<small>問</small></div><div class="l">復習リスト</div></div><div class="kpi"><div class="v">' + nWrong + '<small>問</small></div><div class="l">間違えた</div></div><div class="kpi"><div class="v">' + nUnsure + '<small>問</small></div><div class="l">自信なし</div></div></div>';
+    h += '<p class="note">間違えた問題と、正解でも「自信なし」を付けた問題が入る。自信ありで連続 ' + settings.reviewClearStreak + " 回正解するとリストから外れる（設定で変更）。</p>";
+    h += '<div class="btn-row"><button type="button" class="primary" data-act="start-review" data-mode="order"' + (list.length ? "" : " disabled") + ">" + SVG.redo + "復習を始める</button>" +
+      '<button type="button" class="secondary" data-act="start-review" data-mode="random"' + (list.length ? "" : " disabled") + ">ランダム順</button></div></div>";
+    if (!list.length) {
+      h += '<div class="card"><div class="empty">復習する問題はまだない。解く タブで問題を解くと、間違えた問題と自信なしの問題がここに集まる。</div></div>';
+    } else {
+      h += '<div class="section-h"><h2>リスト</h2><span class="sub">タップでその問題から</span></div><div class="card">';
+      list.forEach(function (q) {
+        var p = progress[q.id];
+        var chips = (p.lastResult === "wrong" ? '<span class="chip danger">間違い</span>' : "") + (p.unsure ? '<span class="chip warn">自信なし</span>' : "") +
+          '<span class="chip gray">連続正解 ' + (p.streak || 0) + "/" + settings.reviewClearStreak + "</span>" + (q.choicesComplete ? "" : '<span class="chip gray">誤肢のみ収録</span>');
+        h += '<button type="button" class="row" data-act="review-one" data-id="' + esc(q.id) + '"><div class="grow"><div class="row-title">' + esc(qLabel(q)) + '</div><div class="row-meta">' + esc(q.intent || q.field) + '</div><div class="chips">' + chips + "</div></div></button>";
+      });
+      h += "</div>";
+    }
+    el.innerHTML = h;
+  }
+  function startReview(mode, firstId) {
+    var list = orderQs(Q.filter(function (q) { return inReview(q.id); }), mode === "random", false).map(function (q) { return q.id; });
+    if (firstId) { list = list.filter(function (x) { return x !== firstId; }); list.unshift(firstId); }
+    startSession("review", list, "復習リスト " + list.length + "問");
+    render();
+    window.scrollTo(0, 0);
+  }
+
+  // ===================================================================
+  // 描画：成績
+  // ===================================================================
+  function subjStats(s) {
+    var list = subjQs(s), meta = DATA.subjects[s] || {};
+    var att = 0, now = 0, chk = 0, chkOpen = 0;
+    var byYear = {};
+    list.forEach(function (q) {
+      var p = progress[q.id];
+      if (!byYear[q.year]) byYear[q.year] = { n: 0, c: 0 };
+      byYear[q.year].n++;
+      if (p && p.attempts) att++;
+      if (p && p.lastResult === "correct") { now++; byYear[q.year].c++; }
+      if (q.confidence === "要確認") { chk++; if (!(p && p.lastResult === "correct")) chkOpen++; }
+    });
+    var official = meta.officialCount || 0;
+    var est = list.length ? Math.round(now / list.length * official) : 0;
+    var estAtt = att ? Math.round(now / att * official) : 0;
+    return { list: list, meta: meta, att: att, now: now, chk: chk, chkOpen: chkOpen, byYear: byYear, official: official, est: est, estAtt: estAtt, cutoff: cutoffOf(s) };
+  }
+  function renderStats() {
+    var el = document.getElementById("page-stats");
+    if (!DATA) { el.innerHTML = '<div class="empty">' + esc(dataError || "問題データを読み込み中") + "</div>"; return; }
+    var h = '<div class="notice warn">' + esc(cutoffLabel()) + "</div>";
+    h += '<p class="note" style="margin:-4px 0 12px">目安点 ＝ 収録問題のうち「いま正解している問題数」の割合 × 本番の出題数。同じ問題を何度正解しても1問1点。足切りまでの距離はこの目安点で出す。</p>';
+    var totEst = 0, totOff = 0, totChk = 0, totChkOpen = 0, missing = [];
+    h += '<div class="section-h"><h2>科目別</h2></div>';
+    SUBJ_ORDER.forEach(function (s) {
+      var st = subjStats(s);
+      var label = st.meta.fullLabel || s;
+      if (!st.list.length) {
+        missing.push(SUBJ_DISP[s]);
+        h += '<div class="card padded"><div class="subj-h"><span class="n">' + esc(label) + '</span><span class="chip gray">未収録</span></div><p class="note">データが無いので正答率・目安点は出さない。本番 ' + st.official + "問・基準 " + st.cutoff + "点（仮）。</p></div>";
+        return;
+      }
+      totEst += st.est; totOff += st.official; totChk += st.chk; totChkOpen += st.chkOpen;
+      var dist = Math.max(0, st.cutoff - st.est);
+      h += '<div class="card padded"><div class="subj-h"><span class="n">' + esc(label) + '</span><span class="s">収録 ' + st.list.length + "問</span></div>";
+      h += '<div class="kpis" style="margin-top:10px"><div class="kpi"><div class="v">' + (st.att ? pct(st.now, st.att) : 0) + '<small>%</small></div><div class="l">正答率（直近）</div></div>' +
+        '<div class="kpi"><div class="v">' + st.att + '<small>/' + st.list.length + '</small></div><div class="l">解いた</div></div>' +
+        '<div class="kpi"><div class="v">' + st.now + '<small>問</small></div><div class="l">いま正解</div></div></div>';
+      h += '<div class="scorebar"><div class="bar"><i style="width:' + pct(st.est, st.official) + '%"></i></div><span class="mark" style="left:calc(' + pct(st.cutoff, st.official) + '% - 1px)"></span></div>';
+      h += '<div class="status-line"><span>目安点</span><span>' + st.est + " / " + st.official + "点</span></div>";
+      h += '<div class="status-line"><span>足切り（' + st.cutoff + "点・仮）まで</span><span class=\"dist" + (dist ? "" : " reach") + '">' + (dist ? "あと " + dist + "点" : "到達") + "</span></div>";
+      h += '<div class="status-line"><span>参考：解いた問題の正答率で換算</span><span>' + (st.att ? st.estAtt + " / " + st.official + "点" : "—") + "</span></div>";
+      h += '<div class="status-line"><span>要確認の問題</span><span>' + st.chk + "問</span></div>";
+      if (s === "施工") h += '<p class="note" style="color:var(--warn)">施工は247問が誤肢と解説だけ収録（自己採点）。本番モードの対象外。</p>';
+      h += '<div class="years">';
+      Object.keys(st.byYear).sort().forEach(function (y) {
+        var b = st.byYear[y];
+        h += "<div>" + y + "<b>" + b.c + "/" + b.n + "</b></div>";
+      });
+      h += '</div><p class="note">年度ごとの「いま正解」数</p></div>';
+    });
+    // 総合
+    var basicTot = cutoffOf("総得点");
+    h += '<div class="section-h"><h2>総合の目安</h2></div><div class="card padded">';
+    h += '<div class="status-line"><span>収録科目の目安点</span><span>' + totEst + " / " + totOff + "点</span></div>";
+    h += '<div class="status-line"><span>総得点の基準（仮）</span><span>' + basicTot + " / " + TOTAL_MAX + "点</span></div>";
+    h += '<div class="status-line"><span>総得点の判定</span><span>' + (missing.length ? "判定できない" : (totEst >= basicTot ? "到達" : "あと " + (basicTot - totEst) + "点")) + "</span></div>";
+    if (missing.length) h += '<p class="note">' + esc(missing.join("・")) + "は未収録のため、総得点 " + basicTot + "点との比較はできない。収録科目（" + totOff + "点分）の目安だけ出している。</p>";
+    h += "</div>";
+    // 要確認
+    h += '<div class="section-h"><h2>要確認の問題</h2></div><div class="card padded">';
+    h += '<div class="status-line"><span>確度が「要確認」の収録問題</span><span>' + totChk + "問</span></div>";
+    h += '<div class="status-line"><span>うち、いま正解していない</span><span>' + totChkOpen + "問</span></div>";
+    h += '<p class="note" style="color:var(--warn)">要確認は解説の根拠が弱い問題。公式資料で確かめること。</p>';
+    h += '<div class="btn-row"><button type="button" class="secondary" data-act="solve-check">要確認の問題を解く</button></div></div>';
+    // カレンダー
+    h += '<div class="section-h"><h2>ノルマの記録</h2></div><div class="card padded">' + renderCalendar() + "</div>";
+    el.innerHTML = h;
+  }
+  function renderCalendar() {
+    var t = today();
+    var m = calMonth || t.slice(0, 7);
+    var y = parseInt(m.slice(0, 4), 10), mo = parseInt(m.slice(5, 7), 10);
+    var first = m + "-01";
+    var nDays = new Date(Date.UTC(y, mo, 0)).getUTCDate();
+    var h = '<div class="cal-nav"><button type="button" data-act="cal-prev" aria-label="前の月">' + SVG.left + '</button><div class="cal-title">' + y + "年" + mo + '月</div><button type="button" data-act="cal-next" aria-label="次の月">' + SVG.right + "</button></div>";
+    h += '<div class="cal-grid">';
+    "日月火水木金土".split("").forEach(function (d) { h += '<div class="cal-dow">' + d + "</div>"; });
+    var lead = dowSun0(first);
+    for (var i = 0; i < lead; i++) h += '<div class="cal-day blank"></div>';
+    var sel = calSel || t;
+    var monthAns = 0, monthHit = 0;
+    for (var d = 1; d <= nDays; d++) {
+      var ds = m + "-" + (d < 10 ? "0" : "") + d;
+      var r = daily[ds];
+      var cls = "cal-day";
+      if (ds === t) cls += " today";
+      if (ds === sel) cls += " selected";
+      if (ds === settings.examDate) cls += " exam";
+      var cnt = "";
+      if (r && r.answered) {
+        monthAns += r.answered;
+        if (r.quota && r.answered >= r.quota) { cls += " hit"; monthHit++; } else cls += " part";
+        cnt = r.answered + "問";
+      }
+      h += '<button type="button" class="' + cls + '" data-act="cal-day" data-d="' + ds + '"><span class="cal-num">' + d + '</span><span class="cal-cnt">' + cnt + "</span></button>";
+    }
+    h += "</div>";
+    h += '<div class="legend"><span><i style="background:var(--ok)"></i>ノルマ達成</span><span><i style="background:var(--accent)"></i>未達</span><span><i style="box-shadow:inset 0 0 0 2px var(--warn)"></i>試験日（' + (settings.examDateProvisional ? "仮" : "設定") + "）</span></div>";
+    var r2 = daily[sel];
+    h += '<div class="status-line" style="margin-top:8px"><span>' + esc(jpDate(sel)) + "</span><span>" +
+      (r2 && r2.answered ? "解答 " + r2.answered + "問（正解 " + r2.correct + "）" + (r2.quota ? "／ノルマ " + r2.quota + "問 " + (r2.answered >= r2.quota ? "達成" : "未達") : "") : "記録なし") + "</span></div>";
+    h += '<div class="status-line"><span>この月の合計</span><span>' + monthAns + "問・達成 " + monthHit + "日</span></div>";
+    return h;
+  }
+
+  // ===================================================================
+  // 本番モード
+  // ===================================================================
+  function examPool() { return Q.filter(function (q) { return q.subject === "計画" && q.choicesComplete; }); }
+  function startExam() {
+    var pool = examPool(), picked;
+    if (examSetup.mode === "year") {
+      picked = pool.filter(function (q) { return q.year === examSetup.year; });
+    } else {
+      var ys = examSetup.years.length ? examSetup.years : yearsOf(["計画"]);
+      picked = shuffle(pool.filter(function (q) { return ys.indexOf(q.year) >= 0; })).slice(0, EXAM_COUNT);
+    }
+    picked.sort(function (a, b) { return a.year - b.year || a.number - b.number; });
+    if (picked.length < EXAM_COUNT) { toast("20問そろわない"); return; }
+    var now = Date.now();
+    examSession = {
+      set: "keikaku-practice",
+      label: examSetup.mode === "year" ? "計画 " + examSetup.year + "年（1年分）" : "計画 複数年ランダム（" + (examSetup.years.length ? examSetup.years.slice().sort().join(",") : "全年度") + "）",
+      qids: picked.map(function (q) { return q.id; }),
+      answers: {},
+      unsure: {},
+      idx: 0,
+      startedAt: now,
+      endsAt: now + EXAM_MIN * 60000,
+      durationMin: EXAM_MIN
+    };
+    examResult = null;
+    saveExam();
+    closeSheet();
+    switchTab("exam", true);
+  }
+  function finishExam(timeUp) {
+    if (!examSession) return;
+    var es = examSession, items = [], score = 0, answered = 0, corr = 0;
+    es.qids.forEach(function (id) {
+      var q = QMAP[id]; if (!q) return;
+      var a = es.answers[id];
+      var ok = a != null && isCorrectChoice(q, a);
+      if (ok) score++;
+      if (a != null) {
+        answered++; if (ok) corr++;
+        progress[id] = applyResult(progress[id] || null, ok, !!es.unsure[id]);
+      }
+      items.push({ id: id, a: a == null ? null : a, ok: ok });
+    });
+    if (answered) addDaily(answered, corr);
+    saveProgress(); saveDaily();
+    examResult = {
+      label: es.label, score: score, total: es.qids.length, answered: answered,
+      usedMs: Math.min(Date.now(), es.endsAt) - es.startedAt, timeUp: !!timeUp, items: items
+    };
+    examSession = null;
+    saveExam();
+    closeSheet();
+    if (tab !== "exam") switchTab("exam", true); else { render(); window.scrollTo(0, 0); }
+    toast(timeUp ? "時間切れ。採点した" : "採点した");
+  }
+  function tickExam() {
+    if (!examSession) { if (examTimer) { clearInterval(examTimer); examTimer = null; } return; }
+    var rem = examSession.endsAt - Date.now();
+    if (rem <= 0) { finishExam(true); return; }
+    var el = document.getElementById("examRemain");
+    if (el) { el.textContent = mmss(rem); el.classList.toggle("low", rem < 5 * 60000); }
+    updateHeader();
+  }
+  function ensureExamTimer() {
+    if (examSession && !examTimer) examTimer = setInterval(tickExam, 1000);
+    if (!examSession && examTimer) { clearInterval(examTimer); examTimer = null; }
+  }
+  function renderExam() {
+    var el = document.getElementById("page-exam");
+    if (!DATA) { el.innerHTML = '<div class="empty">' + esc(dataError || "問題データを読み込み中") + "</div>"; return; }
+    if (examSession) { el.innerHTML = renderExamRun(); return; }
+    if (examResult) { el.innerHTML = renderExamResult(); return; }
+    // 入口
+    var h = '<div class="notice">本番モードは時間を計って通しで解く。解答中は正誤を出さず、終了後にまとめて採点する。途中終了もできる。</div>';
+    h += '<div class="section-h"><h2>いまできるセット</h2></div><div class="card padded">';
+    h += '<div class="subj-h"><span class="n">計画のみ（練習）</span><span class="s">20問・60分</span></div>';
+    h += '<p class="note">60分は按分した目安。公式は学科Ⅰ・Ⅱを合わせて2時間で40問。公式は合算時間。按分は目安。</p>';
+    h += '<div class="field-label">年度の選び方</div><div class="seg"><button type="button" class="' + (examSetup.mode === "year" ? "on" : "") + '" data-act="ex-mode" data-v="year">1年分そのまま</button><button type="button" class="' + (examSetup.mode === "mix" ? "on" : "") + '" data-act="ex-mode" data-v="mix">複数年からランダム</button></div>';
+    var ys = yearsOf(["計画"]);
+    if (examSetup.mode === "year") {
+      h += '<div class="field-label">年度</div><div class="tgls">';
+      ys.forEach(function (y) { h += '<button type="button" class="tgl mini' + (examSetup.year === y ? " on" : "") + '" data-act="ex-year" data-v="' + y + '">' + y + "</button>"; });
+      h += "</div>";
+    } else {
+      h += '<div class="field-label"><span>混ぜる年度（未選択はすべて）</span></div><div class="tgls">';
+      ys.forEach(function (y) { h += '<button type="button" class="tgl mini' + (examSetup.years.indexOf(y) >= 0 ? " on" : "") + '" data-act="ex-years" data-v="' + y + '">' + y + "</button>"; });
+      h += '</div><p class="note">ランダムに20問選び、年度・問題番号順に並べる。</p>';
+    }
+    h += '<div class="btn-row"><button type="button" class="primary" data-act="ex-start">' + SVG.timer + "開始する（60分）</button></div>";
+    h += '<p class="note">結果は科目内の点数と、基本水準（11点）に届いたか。記録は通常の進捗と今日のノルマにも足す。</p></div>';
+    h += '<div class="section-h"><h2>本試験セット</h2></div>';
+    h += examSetsHtml(false);
+    h += '<p class="note">出題数・時間は建築技術教育普及センターの公式（令和8年まで同じ型）。令和9年の日程・基準は未発表。</p>';
+    el.innerHTML = h;
+  }
+  function renderExamRun() {
+    var es = examSession;
+    var q = QMAP[es.qids[es.idx]];
+    var rem = es.endsAt - Date.now();
+    var nAns = Object.keys(es.answers).length;
+    var h = '<div class="exam-bar"><span class="timer' + (rem < 300000 ? " low" : "") + '" id="examRemain">' + mmss(rem) + '</span><div class="eb-mid">' + esc(es.label) + "<br>解答 " + nAns + " / " + es.qids.length + '・按分60分（目安）</div><button type="button" class="danger-btn eb-end" data-act="ex-finish-ask">終了</button></div>';
+    h += '<div class="q-top"><span>' + (es.idx + 1) + " / " + es.qids.length + "問</span></div>";
+    h += '<div class="card padded">' + renderQHead(q);
+    var a = es.answers[q.id];
+    q.choices.forEach(function (ch) {
+      h += '<button type="button" class="choice' + (a === ch.n ? " sel" : "") + '" data-act="ex-answer" data-n="' + ch.n + '"><span class="cn">' + ch.n + '</span><span class="ct">' + esc(ch.text) + "</span></button>";
+    });
+    h += '<div class="btn-row"><button type="button" class="tgl' + (es.unsure[q.id] ? " on" : "") + '" data-act="ex-unsure">自信なし' + (es.unsure[q.id] ? "（付けた）" : "") + "</button></div>";
+    h += '<div class="btn-row"><button type="button" class="secondary" data-act="ex-go" data-v="' + (es.idx - 1) + '"' + (es.idx === 0 ? " disabled" : "") + ">" + SVG.left + '前へ</button><button type="button" class="primary" data-act="ex-go" data-v="' + (es.idx + 1) + '"' + (es.idx >= es.qids.length - 1 ? " disabled" : "") + ">次へ" + SVG.right + "</button></div>";
+    h += "</div>";
+    h += '<div class="card padded"><div class="field-label">問題一覧（塗りは解答済み）</div><div class="qgrid">';
+    es.qids.forEach(function (id, i) {
+      h += '<button type="button" class="' + (es.answers[id] != null ? "done" : "") + (i === es.idx ? " cur" : "") + '" data-act="ex-go" data-v="' + i + '">' + (i + 1) + "</button>";
+    });
+    h += '</div><div class="btn-row"><button type="button" class="danger-btn" data-act="ex-finish-ask">途中で終了して採点</button></div></div>';
+    return h;
+  }
+  function renderExamResult() {
+    var r = examResult;
+    var basic = BASIC_CUTOFF["計画"], cur = cutoffOf("計画");
+    var h = '<div class="card padded"><div class="subj-h"><span class="n">結果</span><span class="s">' + esc(r.label) + "</span></div>";
+    h += '<div class="big-score" style="margin-top:10px">' + r.score + "<small> / " + r.total + "点</small></div>";
+    h += '<div class="result-banner ' + (r.score >= basic ? "ok" : "ng") + '">' + (r.score >= basic ? SVG.ok : SVG.ng) + "<div><div>基本水準（" + basic + "点）" + (r.score >= basic ? "に到達" : "に未達（あと " + (basic - r.score) + "点）") + '</div><div class="rb-sub">令和9年の公式基準は未発表。基本水準は各科目過半。</div></div></div>';
+    if (cur !== basic) h += '<p class="note">手入力の基準 ' + cur + "点: " + (r.score >= cur ? "到達" : "あと " + (cur - r.score) + "点") + "</p>";
+    h += '<div class="status-line" style="margin-top:8px"><span>解答した問題</span><span>' + r.answered + " / " + r.total + "問</span></div>";
+    h += '<div class="status-line"><span>使った時間</span><span>' + mmss(r.usedMs) + " / 60:00" + (r.timeUp ? "（時間切れ）" : "") + "</span></div>";
+    h += '<p class="note">解答した問題は通常の進捗と今日のノルマに足した。未解答は記録していない。</p>';
+    h += '<div class="qgrid">';
+    r.items.forEach(function (it, i) {
+      h += '<button type="button" class="' + (it.ok ? "ok" : (it.a == null ? "" : "ng")) + '" data-act="ex-res-q" data-i="' + i + '">' + (i + 1) + "</button>";
+    });
+    h += "</div></div>";
+    h += '<div class="section-h"><h2>問題ごと</h2><span class="sub">タップで解説</span></div><div class="card">';
+    r.items.forEach(function (it, i) {
+      var q = QMAP[it.id];
+      h += '<button type="button" class="row" data-act="ex-res-q" data-i="' + i + '"><div class="grow"><div class="row-title">' + (i + 1) + ". " + esc(qLabel(q)) + '</div><div class="row-meta">' + esc(q.intent || q.field) + '</div><div class="chips">' +
+        (it.ok ? '<span class="chip ok">正解</span>' : (it.a == null ? '<span class="chip gray">未解答</span>' : '<span class="chip danger">不正解</span>')) +
+        (it.a != null ? '<span class="chip gray">解答 肢' + it.a + "</span>" : "") + '<span class="chip gray">' + esc(q.answerNote) + "</span>" + (q.confidence === "要確認" ? '<span class="chip warn">要確認</span>' : "") + "</div></div></button>";
+    });
+    h += "</div>";
+    h += '<div class="btn-row"><button type="button" class="secondary" data-act="ex-new">もう一度</button><button type="button" class="primary" data-act="tab" data-tab="home">ホームへ</button></div>';
+    return h;
+  }
+  function openExamResultQ(i) {
+    var it = examResult.items[i], q = QMAP[it.id];
+    openDetails = {};
+    q.choices.forEach(function (ch) { if (ch.n === it.a || isCorrectChoice(q, ch.n)) openDetails[q.id + ":" + ch.n] = true; });
+    var h = sheetHead((i + 1) + ". " + qLabel(q));
+    h += renderQHead(q);
+    h += '<div class="result-banner ' + (it.ok ? "ok" : "ng") + '">' + (it.ok ? SVG.ok : SVG.ng) + "<div><div>" + (it.ok ? "正解" : (it.a == null ? "未解答" : "不正解")) + '</div><div class="rb-sub">' + (it.a != null ? "あなたの解答 肢" + it.a + "　" : "") + esc(q.answerNote) + "</div></div></div>";
+    h += multiAnswerNote(q);
+    q.choices.forEach(function (ch) { h += renderChoiceDetail(q, ch, it.a); });
+    h += renderWholeExplanation(q);
+    openSheet(h);
+  }
+
+  // ===================================================================
+  // 設定
+  // ===================================================================
+  function openSettings() {
+    var qi = quotaInfo();
+    var h = sheetHead("設定");
+    h += "<h4>試験日</h4>";
+    h += '<input class="input" type="date" data-set="examDate" value="' + esc(settings.examDate) + '" aria-label="試験日">';
+    h += '<div class="seg" style="margin-top:8px"><button type="button" class="' + (settings.examDateProvisional ? "on" : "") + '" data-act="set-prov" data-v="1">仮（未発表）</button><button type="button" class="' + (!settings.examDateProvisional ? "on" : "") + '" data-act="set-prov" data-v="0">公式の日付</button></div>';
+    h += '<p class="note">令和9年（2027年）の試験日は公式未発表。初期値 2027-07-25（日）は仮。令和8年の学科は 2026-07-26（日）。公式が出たら直す。</p>';
+    if (qi.expired) h += '<p class="note" style="color:var(--danger);font-weight:700">試験日を過ぎている。試験日を更新してください。</p>';
+
+    h += "<h4>今日のノルマ</h4>";
+    h += '<div class="seg"><button type="button" class="' + (settings.quotaMode === "auto" ? "on" : "") + '" data-act="set-qmode" data-v="auto">未正解÷日数</button><button type="button" class="' + (settings.quotaMode === "twice" ? "on" : "") + '" data-act="set-qmode" data-v="twice">全問を2周</button><button type="button" class="' + (settings.quotaMode === "manual" ? "on" : "") + '" data-act="set-qmode" data-v="manual">手入力</button></div>';
+    if (settings.quotaMode === "manual") {
+      h += '<label class="inl" style="margin-top:8px">1日の問題数<input class="input" type="number" inputmode="numeric" min="1" max="450" data-set="dailyQuotaOverride" value="' + esc(settings.dailyQuotaOverride || "") + '"></label>';
+    }
+    h += '<p class="note">いまの値: ' + (qi.expired ? "停止中（試験日を過ぎた）" : qi.quota + "問／日。" + esc(qi.basis)) + "</p>";
+
+    h += "<h4>合格基準点</h4>";
+    h += '<div class="seg"><button type="button" class="' + (settings.cutoffMode === "basic" ? "on" : "") + '" data-act="set-cmode" data-v="basic">基本水準</button><button type="button" class="' + (settings.cutoffMode === "manual" ? "on" : "") + '" data-act="set-cmode" data-v="manual">手入力</button></div>';
+    h += '<p class="note">令和9年の合格基準点は未発表（試験後に発表）。基本水準は各科目過半（計画11・環境設備11・法規16・構造16・施工13）＋総得点90。</p>';
+    if (settings.cutoffMode === "manual") {
+      h += '<div class="grid3" style="margin-top:6px">';
+      SUBJ_ORDER.concat(["総得点"]).forEach(function (k) {
+        h += '<label class="inl">' + esc(SUBJ_DISP[k] || k) + '<input class="input" type="number" inputmode="numeric" min="0" max="125" data-set="cutoff" data-k="' + k + '" value="' + settings.cutoff[k] + '"></label>';
+      });
+      h += "</div>";
+    }
+
+    h += "<h4>復習から外す連続正解数</h4><div class=\"seg\">";
+    [1, 2, 3, 4, 5].forEach(function (n) {
+      h += '<button type="button" class="' + (settings.reviewClearStreak === n ? "on" : "") + '" data-act="set-streak" data-v="' + n + '">' + n + "回</button>";
+    });
+    h += '</div><p class="note">自信ありでこの回数続けて正解すると、復習リストから外れる。</p>';
+
+    h += '<h4>テーマ</h4><div class="seg"><button type="button" class="' + (settings.theme === "light" ? "on" : "") + '" data-act="set-theme" data-v="light">ライト</button><button type="button" class="' + (settings.theme === "dark" ? "on" : "") + '" data-act="set-theme" data-v="dark">ダーク</button></div>';
+
+    h += '<h4>記録</h4><div class="btn-row"><button type="button" class="danger-btn" data-act="reset-ask">記録をリセット</button></div>';
+    h += '<p class="note">記録はこの端末の localStorage だけに保存（解答・自信なし・ノルマ・設定）。外部には送らない。</p>';
+
+    h += "<h4>データ</h4>";
+    h += '<p class="note">問題データ: ' + (DATA ? esc(DATA.generatedAt) + "・" + Q.length + "問（計画 " + subjQs("計画").length + "・施工 " + subjQs("施工").length + "）" : "未読み込み") + "</p>";
+    h += '<p class="note">環境・設備／法規／構造は未収録。施工は4肢そろいが ' + Q.filter(function (q) { return q.subject === "施工" && q.choicesComplete; }).length + "問。</p>";
+    h += '<p class="note">アプリ ' + APP_VERSION + "</p>";
+    openSheet(h);
+  }
+  function openResetAsk() {
+    var h = sheetHead("記録をリセットしますか");
+    h += '<p class="note">問題ごとの記録・復習リスト・日ごとのノルマ記録・本番モードの途中経過が消える。設定（試験日・テーマなど）は残る。元に戻せない。</p>';
+    h += '<div class="btn-row"><button type="button" class="secondary" data-act="open-settings">やめる</button><button type="button" class="danger-btn" data-act="reset-run">リセットする</button></div>';
+    openSheet(h);
+  }
+  function applyTheme() {
+    var dark = settings.theme === "dark";
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", dark ? "#000000" : "#1E4D6B");
+  }
+
+  // ===================================================================
+  // 描画の振り分け
+  // ===================================================================
+  function updateHeader() {
+    var sub = "";
+    if (examSession) sub = "本番モード 残り " + mmss(examSession.endsAt - Date.now());
+    else {
+      var d = daysBetween(today(), settings.examDate);
+      sub = d >= 0 ? "試験日 " + settings.examDate + (settings.examDateProvisional ? "（仮）" : "") + " まで " + d + "日" : "試験日を過ぎた。設定で試験日を更新してください";
+    }
+    document.getElementById("appTitle").textContent = TAB_TITLES[tab] || "一級建築士";
+    document.getElementById("appbarSub").textContent = sub;
+  }
+  function render() {
+    document.querySelectorAll(".tab-page").forEach(function (p) { p.classList.toggle("active", p.id === "page-" + tab); });
+    document.querySelectorAll(".tab-btn").forEach(function (b) { b.classList.toggle("active", b.getAttribute("data-tab") === tab); });
+    updateHeader();
+    if (tab === "home") renderHome();
+    else if (tab === "solve") renderSolve();
+    else if (tab === "review") renderReview();
+    else if (tab === "stats") renderStats();
+    else if (tab === "exam") renderExam();
+    ensureExamTimer();
+  }
+  function switchTab(t, top) {
+    tab = t;
+    render();
+    if (top !== false) window.scrollTo(0, 0);
+  }
+
+  // ===================================================================
+  // イベント
+  // ===================================================================
+  function toggleIn(arr, v) { var i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); }
+  document.addEventListener("click", function (e) {
+    var tb = e.target.closest(".tab-btn");
+    if (tb) { switchTab(tb.getAttribute("data-tab")); return; }
+    if (e.target.id === "overlay") { closeSheet(); return; }
+    var el = e.target.closest("[data-act]");
+    if (!el || el.disabled) return;
+    var act = el.getAttribute("data-act");
+    var where = el.getAttribute("data-where");
+    var v = el.getAttribute("data-v");
+    var s;
+    switch (act) {
+      case "open-settings": openSettings(); break;
+      case "close-sheet": closeSheet(); break;
+      case "tab": closeSheet(); switchTab(el.getAttribute("data-tab")); break;
+      case "continue":
+        if (sess.solve && sess.solve.cur && !sess.solve.finished) { switchTab("solve"); break; }
+        startSolve(normFilter(settings.lastFilter || defaultFilter()));
+        break;
+      case "go-exam": switchTab("exam"); break;
+      // 絞り込み
+      case "f-subj":
+        toggleIn(filt.subjects, v);
+        if (!filt.subjects.length) filt.subjects.push(v);
+        var fs = fieldsOf(filt.subjects);
+        filt.fields = filt.fields.filter(function (x) { return fs.indexOf(x) >= 0; });
+        if (filt.subjects.indexOf("施工") < 0) filt.onlyComplete = false;
+        render(); break;
+      case "f-year": toggleIn(filt.years, parseInt(v, 10)); render(); break;
+      case "f-year-all": filt.years = []; render(); break;
+      case "f-field": toggleIn(filt.fields, v); render(); break;
+      case "f-field-clear": filt.fields = []; render(); break;
+      case "f-opt": filt[v] = !filt[v]; render(); break;
+      case "start-solve": startSolve(filt); break;
+      case "solve-check":
+        filt = normFilter({ subjects: recordedSubjects(), years: [], fields: [], unansweredFirst: true, random: false, onlyCheck: true, onlyComplete: false });
+        startSolve(filt); break;
+      // 解答
+      case "answer":
+        s = sess[where]; if (!s || !s.cur || s.cur.done) break;
+        s.cur.choice = parseInt(el.getAttribute("data-n"), 10);
+        s.cur.correct = isCorrectChoice(QMAP[s.cur.qid], s.cur.choice);
+        finalize(where); break;
+      case "reveal": s = sess[where]; if (s && s.cur) { s.cur.revealed = true; render(); } break;
+      case "self":
+        s = sess[where]; if (!s || !s.cur || s.cur.done) break;
+        s.cur.choice = null; s.cur.correct = v === "1";
+        finalize(where); break;
+      case "unsure": setUnsure(where, v === "1"); break;
+      case "next": nextQ(where); break;
+      case "end-session": sess[where] = null; if (where === "solve") filt = normFilter(settings.lastFilter || filt); render(); window.scrollTo(0, 0); break;
+      case "zoom":
+        openSheet(sheetHead("図") + '<div class="zoom-box" id="zoomBox"><img src="' + esc(el.getAttribute("data-src")) + '" alt="図"></div><div class="btn-row"><button type="button" class="secondary" data-act="zoom2">2倍で見る／戻す</button></div><p class="note">2倍のときは枠の中を指でスクロール。</p>');
+        break;
+      case "zoom2": var zb = document.getElementById("zoomBox"); if (zb) zb.classList.toggle("x2"); break;
+      // 復習
+      case "start-review": startReview(el.getAttribute("data-mode")); break;
+      case "review-one": startReview("order", el.getAttribute("data-id")); break;
+      // 成績
+      case "cal-prev": case "cal-next":
+        var m = calMonth || today().slice(0, 7);
+        var yy = parseInt(m.slice(0, 4), 10), mm = parseInt(m.slice(5, 7), 10) + (act === "cal-next" ? 1 : -1);
+        if (mm < 1) { mm = 12; yy--; } if (mm > 12) { mm = 1; yy++; }
+        calMonth = yy + "-" + (mm < 10 ? "0" : "") + mm; render(); break;
+      case "cal-day": calSel = el.getAttribute("data-d"); render(); break;
+      // 本番
+      case "ex-mode": examSetup.mode = v; render(); break;
+      case "ex-year": examSetup.year = parseInt(v, 10); render(); break;
+      case "ex-years": toggleIn(examSetup.years, parseInt(v, 10)); render(); break;
+      case "ex-start": startExam(); break;
+      case "ex-answer":
+        if (!examSession) break;
+        var qid = examSession.qids[examSession.idx], n = parseInt(el.getAttribute("data-n"), 10);
+        if (examSession.answers[qid] === n) delete examSession.answers[qid]; else examSession.answers[qid] = n;
+        saveExam(); render(); break;
+      case "ex-unsure":
+        if (!examSession) break;
+        var qid2 = examSession.qids[examSession.idx];
+        if (examSession.unsure[qid2]) delete examSession.unsure[qid2]; else examSession.unsure[qid2] = true;
+        saveExam(); render(); break;
+      case "ex-go":
+        if (!examSession) break;
+        var i = parseInt(v, 10);
+        if (i >= 0 && i < examSession.qids.length) { examSession.idx = i; saveExam(); render(); window.scrollTo(0, 0); }
+        break;
+      case "ex-finish-ask":
+        if (!examSession) break;
+        var un = examSession.qids.length - Object.keys(examSession.answers).length;
+        openSheet(sheetHead("終了して採点しますか") + '<p class="note">' + (un ? "未解答が " + un + "問ある。未解答は不正解として点数に入れる（進捗には記録しない）。" : "全問に解答済み。") + '</p><div class="btn-row"><button type="button" class="secondary" data-act="close-sheet">続ける</button><button type="button" class="danger-btn" data-act="ex-finish">終了して採点</button></div>');
+        break;
+      case "ex-finish": finishExam(false); break;
+      case "ex-new": examResult = null; render(); window.scrollTo(0, 0); break;
+      case "ex-res-q": openExamResultQ(parseInt(el.getAttribute("data-i"), 10)); break;
+      // 設定
+      case "set-prov": settings.examDateProvisional = v === "1"; saveSettings(); render(); openSettings(); break;
+      case "set-qmode": settings.quotaMode = v; saveSettings(); render(); openSettings(); break;
+      case "set-cmode": settings.cutoffMode = v; saveSettings(); render(); openSettings(); break;
+      case "set-streak": settings.reviewClearStreak = parseInt(v, 10); saveSettings(); render(); openSettings(); break;
+      case "set-theme": settings.theme = v; saveSettings(); applyTheme(); openSettings(); break;
+      case "reset-ask": openResetAsk(); break;
+      case "reset-run":
+        progress = {}; daily = {}; examSession = null; examResult = null; sess = { solve: null, review: null };
+        saveProgress(); saveDaily(); saveExam();
+        closeSheet(); toast("記録をリセットした"); render(); break;
+    }
+  });
+  document.addEventListener("change", function (e) {
+    var el = e.target, k = el.getAttribute && el.getAttribute("data-set");
+    if (!k) return;
+    if (k === "examDate") {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(el.value)) { settings.examDate = el.value; saveSettings(); render(); openSettings(); toast("試験日を " + el.value + " にした"); }
+    } else if (k === "dailyQuotaOverride") {
+      var n = parseInt(el.value, 10);
+      settings.dailyQuotaOverride = isFinite(n) && n > 0 ? n : null;
+      saveSettings(); render(); openSettings();
+    } else if (k === "cutoff") {
+      var c = parseInt(el.value, 10), key = el.getAttribute("data-k");
+      if (isFinite(c) && c >= 0) { settings.cutoff[key] = c; saveSettings(); render(); }
+    }
+  });
+  // 解説の開閉を覚えておく（再描画で閉じないように）
+  document.addEventListener("toggle", function (e) {
+    var d = e.target;
+    if (d && d.getAttribute && d.getAttribute("data-dk")) openDetails[d.getAttribute("data-dk")] = d.open;
+  }, true);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) { tickExam(); if (tab === "home") render(); } });
+
+  // ===================================================================
+  // 起動
+  // ===================================================================
+  applyTheme();
+  render();
+  fetch("./questions.json", { cache: "no-store" }).then(function (res) {
+    if (!res.ok) throw new Error("questions.json HTTP " + res.status);
+    return res.json();
+  }).then(function (d) {
+    DATA = d;
+    Q = (d.questions || []).filter(function (q) { return q && q.id && q.choices && q.choices.length; });
+    QMAP = {};
+    Q.forEach(function (q) { QMAP[q.id] = q; });
+    if (examSession && (!examSession.qids || !examSession.qids.every(function (id) { return QMAP[id]; }))) { examSession = null; saveExam(); }
+    filt = normFilter(settings.lastFilter || defaultFilter());
+    var ys = yearsOf(["計画"]);
+    if (ys.length) examSetup.year = ys[ys.length - 1];
+    if (examSession && examSession.endsAt <= Date.now()) finishExam(true);
+    render();
+  }).catch(function () {
+    dataError = "問題データを読み込めなかった。通信を確認してもう一度開く。";
+    render();
+  });
+
+  if (navigator.serviceWorker && location.protocol !== "file:") {
+    navigator.serviceWorker.register("./sw.js").catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>
