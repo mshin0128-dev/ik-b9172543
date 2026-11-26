@@ -1,5 +1,5 @@
 /* same-folder offline cache only */
-var CACHE_NAME = "ichikyu-cache-v2";
+var CACHE_NAME = "ichikyu-cache-v3"; /* v1・v2 は activate で削除される */
 var SCOPE_URL = new URL("./", self.location.href);
 var CORE_ASSETS = [
   "./index.html",
@@ -10,6 +10,25 @@ var CORE_ASSETS = [
   "./icon-512.png"
 ];
 var FIG_ASSETS = [
+  "./figs/kankyo_2017_04.png",
+  "./figs/kankyo_2018_06.png",
+  "./figs/kankyo_2018_07.png",
+  "./figs/kankyo_2019_03.png",
+  "./figs/kankyo_2019_07.png",
+  "./figs/kankyo_2020_04.png",
+  "./figs/kankyo_2022_07.png",
+  "./figs/kankyo_2022_16.png",
+  "./figs/kankyo_2023_04.png",
+  "./figs/kankyo_2023_06.png",
+  "./figs/kankyo_2023_07.png",
+  "./figs/kankyo_2023_10.png",
+  "./figs/kankyo_2024_03.png",
+  "./figs/kankyo_2024_11.png",
+  "./figs/kankyo_2025_06.png",
+  "./figs/kankyo_2025_09.png",
+  "./figs/kankyo_2025_11.png",
+  "./figs/kankyo_2026_04.png",
+  "./figs/kankyo_2026_12.png",
   "./figs/keikaku_2017_19.png",
   "./figs/keikaku_2018_05.png",
   "./figs/keikaku_2018_20.png",

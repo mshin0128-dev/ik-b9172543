@@ -382,7 +382,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
   // 定数
   // ===================================================================
   var TZ = "Asia/Tokyo";
-  var APP_VERSION = "v2026.11.25";
+  var APP_VERSION = "v2026.11.26b";
   var K_PROG = "ichikyu_progress_v1";
   var K_DAILY = "ichikyu_daily_v1";
   var K_SET = "ichikyu_settings_v1";
@@ -392,9 +392,24 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
   var BASIC_CUTOFF = { "計画": 11, "環境設備": 11, "法規": 16, "構造": 16, "施工": 13, "総得点": 90 };
   var TOTAL_MAX = 125;
   var DEFAULT_EXAM_DATE = "2027-07-25";
-  var EXAM_MIN = 60;
-  var EXAM_COUNT = 20;
-  var INCOMPLETE_MSG = "この問題は誤肢と解説だけ収録。他の選択肢は未収録";
+  // 本番モードの練習セット（1科目だけ。時間は公式の合算時間を問題数で按分した目安）
+  // 本番モードのセット。parts の科目がすべて収録されていれば選べる（データから判定）。
+  // prorated: true は公式の合算時間を問題数で按分した目安、false は公式の試験時間そのもの。
+  var OFFICIAL_12 = "公式は学科Ⅰ・Ⅱを合わせて2時間で40問。公式は合算時間。按分は目安。";
+  var OFFICIAL_45 = "公式は学科Ⅳ・Ⅴを合わせて2時間45分で55問。公式は合算時間。按分は目安。";
+  var EXAM_SETS = {
+    gakka12: { name: "学科Ⅰ・Ⅱ（計画＋環境・設備）", short: "学科Ⅰ・Ⅱ", parts: [{ subject: "計画", count: 20 }, { subject: "環境設備", count: 20 }], min: 120, prorated: false,
+      official: "公式は学科Ⅰ・Ⅱを合わせて2時間（9:40–11:40）で40問。", fallback: "計画20問・按分60分の練習だけ出す。" },
+    keikaku: { name: "計画のみ（練習）", short: "計画のみ", parts: [{ subject: "計画", count: 20 }], min: 60, prorated: true, official: OFFICIAL_12 },
+    kankyo: { name: "環境・設備のみ（練習）", short: "環境・設備のみ", parts: [{ subject: "環境設備", count: 20 }], min: 60, prorated: true, official: OFFICIAL_12 },
+    gakka3: { name: "学科Ⅲ（法規）", short: "学科Ⅲ", parts: [{ subject: "法規", count: 30 }], min: 105, prorated: false, official: "公式は1時間45分（12:55–14:40）で30問。" },
+    gakka45: { name: "学科Ⅳ・Ⅴ（構造＋施工）", short: "学科Ⅳ・Ⅴ", parts: [{ subject: "構造", count: 30 }, { subject: "施工", count: 25 }], min: 165, prorated: false,
+      official: "公式は学科Ⅳ・Ⅴを合わせて2時間45分（15:15–18:00）で55問。", fallback: "施工25問・按分75分の練習だけ出す。" },
+    sekou: { name: "施工のみ（練習）", short: "施工のみ", parts: [{ subject: "施工", count: 25 }], min: 75, prorated: true, official: OFFICIAL_45 }
+  };
+  var EXAM_SET_ORDER = ["gakka12", "keikaku", "kankyo", "gakka3", "gakka45", "sekou"];
+  // 将来、肢が一部しか無い問題が入ったとき用（いまのデータでは使われない）
+  var INCOMPLETE_MSG = "この問題は選択肢の一部だけ収録。他の選択肢は未収録";
   var TAB_TITLES = { home: "一級建築士", solve: "解く", review: "復習", stats: "成績", exam: "本番モード" };
 
   var SVG = {
@@ -421,7 +436,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
   var filt = null;
   var sess = { solve: null, review: null };
   var openDetails = {};
-  var examSetup = { mode: "year", year: 2026, years: [] };
+  var examSetup = { set: "keikaku", mode: "year", year: 2026, years: [] };
   var examResult = null;
   var calMonth = null, calSel = null;
   var examTimer = null;
@@ -648,6 +663,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     var rec = recordedSubjects();
     f.subjects = (f.subjects || []).filter(function (s) { return rec.indexOf(s) >= 0; });
     if (!f.subjects.length && rec.length) f.subjects = [rec[0]];
+    f.onlyComplete = false; // v2: 全問4肢のため絞り込みは廃止（v1 の保存値は無視）
     return f;
   }
   function matchFilter(q, f) {
@@ -655,7 +671,6 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     if (f.years.length && f.years.indexOf(q.year) < 0) return false;
     if (f.fields.length && f.fields.indexOf(q.field) < 0) return false;
     if (f.onlyCheck && q.confidence !== "要確認") return false;
-    if (f.onlyComplete && !q.choicesComplete) return false;
     return true;
   }
   function orderQs(list, random, unansweredFirst) {
@@ -692,7 +707,6 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     s += " / " + (f.years.length ? f.years.slice().sort().join(",") + "年" : "全年度");
     if (f.fields.length) s += " / " + f.fields.join("・");
     if (f.onlyCheck) s += " / 要確認のみ";
-    if (f.onlyComplete) s += " / 4肢そろいのみ";
     return s;
   }
 
@@ -794,8 +808,9 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     var h = '<div class="q-meta">' + esc(qLabel(q)) + " ・ " + esc(q.field) + "</div>";
     var chips = "";
     if (q.confidence === "要確認") chips += '<span class="chip warn">要確認：解説の確度が低い</span>';
-    if (q.hasFigure) chips += '<span class="chip gray">図あり</span>';
-    if (!q.choicesComplete) chips += '<span class="chip warn">誤肢と解説だけ収録</span>';
+    if (q.images && q.images.length) chips += '<span class="chip gray">図あり</span>';
+    else if (q.hasFigure) chips += '<span class="chip gray">図あり（画像は未収録）</span>';
+    if (!q.choicesComplete) chips += '<span class="chip warn">選択肢の一部だけ収録</span>';
     if (inReview(q.id)) chips += '<span class="chip danger">復習リスト</span>';
     if (chips) h += '<div class="chips">' + chips + "</div>";
     h += '<p class="q-stem">' + esc(q.stem) + "</p>";
@@ -835,7 +850,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     } else {
       // 解答後
       h += '<div class="result-banner ' + (c.correct ? "ok" : "ng") + '">' + (c.correct ? SVG.ok : SVG.ng) + '<div><div>' + (c.correct ? "正解" : "不正解") + '</div><div class="rb-sub">' +
-        (q.choicesComplete ? (c.choice != null ? "あなたの解答 肢" + c.choice + "　" : "") : "自己採点　") + esc(q.answerNote || ("正答 " + q.answers.join("・"))) + "</div></div></div>";
+        (q.choicesComplete ? (c.choice != null ? "あなたの解答 肢" + c.choice + "　" : "") : "自己判定　") + esc(q.answerNote || ("正答 " + q.answers.join("・"))) + "</div></div></div>";
       h += multiAnswerNote(q);
       h += '<p class="note" style="margin-top:10px">各肢をタップすると、記述の正誤・どこが誤りか・正しい内容・根拠が開く。</p>';
       q.choices.forEach(function (ch) { h += renderChoiceDetail(q, ch, c.choice); });
@@ -887,12 +902,13 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
   }
   function examSetsHtml(withStart) {
     var h = '<div class="card">';
-    h += '<div class="set-row"><div class="t"><span>計画のみ（練習）</span><span class="chip ok">できる</span></div><div class="d">20問・60分（按分・目安）。1年分そのまま、または複数年からランダム20問。<br>公式は学科Ⅰ・Ⅱを合わせて2時間で40問。公式は合算時間。按分は目安。</div>' +
-      (withStart ? '<div class="btn-row"><button type="button" class="primary" data-act="go-exam">' + SVG.timer + "本番モードへ</button></div>" : "") + "</div>";
-    h += '<div class="set-row off"><div class="t"><span>学科Ⅰ・Ⅱ（計画＋環境・設備）</span><span class="chip gray">選べない</span></div><div class="d">40問・120分。環境・設備が未収録のため不可。計画20問・按分60分の練習だけ出す。</div></div>';
-    h += '<div class="set-row off"><div class="t"><span>学科Ⅲ（法規）</span><span class="chip gray">選べない</span></div><div class="d">30問・105分。法規が未収録のため不可。</div></div>';
-    h += '<div class="set-row off"><div class="t"><span>学科Ⅳ・Ⅴ（構造＋施工）</span><span class="chip gray">選べない</span></div><div class="d">55問・165分。構造が未収録。施工は4肢がそろっているのが3問だけで本番にならない。施工の本番は4肢がそろってから有効。</div></div>';
-    h += '<div class="set-row off"><div class="t"><span>全科目125問</span><span class="chip gray">作らない</span></div><div class="d">データ不足のため、全収録から125問相当のセットは作らない。</div></div>';
+    EXAM_SET_ORDER.forEach(function (k) {
+      var s = EXAM_SETS[k], ok = examAvailable(k);
+      h += '<div class="set-row' + (ok ? "" : " off") + '" data-set-row="' + k + '"><div class="t"><span>' + esc(s.name) + '</span><span class="chip ' + (ok ? "ok" : "gray") + '">' + (ok ? "できる" : "選べない") + "</span></div>" +
+        '<div class="d">' + setCount(s) + "問・" + examTimeText(s) + "。" + (ok ? examPickText(s) + "<br>" + esc(s.official) : esc(examUnavailReason(k))) + "</div>" +
+        (withStart && ok ? '<div class="btn-row"><button type="button" class="primary" data-act="go-exam" data-v="' + k + '">' + SVG.timer + esc(s.short) + (s.prorated ? "の本番練習へ" : "の本番へ") + "</button></div>" : "") + "</div>";
+    });
+    h += '<div class="set-row off"><div class="t"><span>全科目125問</span><span class="chip gray">作らない</span></div><div class="d">' + (SUBJ_ORDER.filter(function (x) { return !subjQs(x).length; }).length ? esc(SUBJ_ORDER.filter(function (x) { return !subjQs(x).length; }).map(function (x) { return SUBJ_DISP[x]; }).join("・")) + "が未収録のため、全科目125問のセットは作らない。" : "全科目125問のセットはまだ作っていない。") + '</div></div>';
     h += "</div>";
     return h;
   }
@@ -920,7 +936,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
       var d;
       if (!list.length) d = '<span class="chip gray">未収録</span> 誤り選択肢＋解説のデータが無い。問題は出さない。';
       else if (full === list.length) d = list.length + "問（" + yearsOf([s])[0] + "–" + yearsOf([s]).slice(-1)[0] + "年）すべて4肢あり。";
-      else d = list.length + "問のうち4肢そろいは" + full + "問。残り" + (list.length - full) + "問は誤肢と解説だけ収録（自己採点で解く）。";
+      else d = list.length + "問のうち4肢ありは" + full + "問。残り" + (list.length - full) + "問は選択肢の一部だけ収録（自分で判定して解く）。";
       h += '<div class="row"><div class="grow"><div class="row-title">' + esc(meta.fullLabel || s) + '</div><div class="row-meta">' + d + "</div></div></div>";
     });
     h += "</div>";
@@ -945,7 +961,6 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
       h += '<button type="button" class="tgl' + (f.subjects.indexOf(sj) >= 0 ? " on" : "") + '" data-act="f-subj" data-v="' + sj + '"' + (has ? "" : " disabled") + ">" + esc(SUBJ_DISP[sj]) + (has ? "" : "（未収録）") + "</button>";
     });
     h += "</div>";
-    if (f.subjects.indexOf("施工") >= 0) h += '<p class="note" style="color:var(--warn)">施工は250問のうち247問が「誤肢と解説だけ収録」。他の選択肢は未収録なので、誤りの箇所を考えて自己採点する。</p>';
     var ys = yearsOf(f.subjects);
     h += '<div class="field-label"><span>年度（複数可）</span><button type="button" class="lnk" data-act="f-year-all">' + (f.years.length ? "すべてに戻す" : "すべて") + "</button></div><div class=\"tgls\">";
     ys.forEach(function (y) {
@@ -962,7 +977,6 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     h += '<button type="button" class="tgl mini' + (f.unansweredFirst ? " on" : "") + '" data-act="f-opt" data-v="unansweredFirst">未解答優先</button>';
     h += '<button type="button" class="tgl mini' + (f.random ? " on" : "") + '" data-act="f-opt" data-v="random">ランダム順</button>';
     h += '<button type="button" class="tgl mini' + (f.onlyCheck ? " on" : "") + '" data-act="f-opt" data-v="onlyCheck">要確認だけ</button>';
-    if (f.subjects.indexOf("施工") >= 0) h += '<button type="button" class="tgl mini' + (f.onlyComplete ? " on" : "") + '" data-act="f-opt" data-v="onlyComplete">4肢そろいだけ</button>';
     h += "</div>";
     var list = Q.filter(function (q) { return matchFilter(q, f); });
     var un = list.filter(function (q) { return !(progress[q.id] && progress[q.id].attempts); }).length;
@@ -997,7 +1011,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
       list.forEach(function (q) {
         var p = progress[q.id];
         var chips = (p.lastResult === "wrong" ? '<span class="chip danger">間違い</span>' : "") + (p.unsure ? '<span class="chip warn">自信なし</span>' : "") +
-          '<span class="chip gray">連続正解 ' + (p.streak || 0) + "/" + settings.reviewClearStreak + "</span>" + (q.choicesComplete ? "" : '<span class="chip gray">誤肢のみ収録</span>');
+          '<span class="chip gray">連続正解 ' + (p.streak || 0) + "/" + settings.reviewClearStreak + "</span>" + (q.choicesComplete ? "" : '<span class="chip gray">肢の一部のみ収録</span>');
         h += '<button type="button" class="row" data-act="review-one" data-id="' + esc(q.id) + '"><div class="grow"><div class="row-title">' + esc(qLabel(q)) + '</div><div class="row-meta">' + esc(q.intent || q.field) + '</div><div class="chips">' + chips + "</div></div></button>";
       });
       h += "</div>";
@@ -1058,7 +1072,6 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
       h += '<div class="status-line"><span>足切り（' + st.cutoff + "点・仮）まで</span><span class=\"dist" + (dist ? "" : " reach") + '">' + (dist ? "あと " + dist + "点" : "到達") + "</span></div>";
       h += '<div class="status-line"><span>参考：解いた問題の正答率で換算</span><span>' + (st.att ? st.estAtt + " / " + st.official + "点" : "—") + "</span></div>";
       h += '<div class="status-line"><span>要確認の問題</span><span>' + st.chk + "問</span></div>";
-      if (s === "施工") h += '<p class="note" style="color:var(--warn)">施工は247問が誤肢と解説だけ収録（自己採点）。本番モードの対象外。</p>';
       h += '<div class="years">';
       Object.keys(st.byYear).sort().forEach(function (y) {
         var b = st.byYear[y];
@@ -1124,28 +1137,97 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
   // ===================================================================
   // 本番モード
   // ===================================================================
-  function examPool() { return Q.filter(function (q) { return q.subject === "計画" && q.choicesComplete; }); }
-  function startExam() {
-    var pool = examPool(), picked;
-    if (examSetup.mode === "year") {
-      picked = pool.filter(function (q) { return q.year === examSetup.year; });
-    } else {
-      var ys = examSetup.years.length ? examSetup.years : yearsOf(["計画"]);
-      picked = shuffle(pool.filter(function (q) { return ys.indexOf(q.year) >= 0; })).slice(0, EXAM_COUNT);
+  function examSetOf(key) { return EXAM_SETS[key] || EXAM_SETS.keikaku; }
+  function setCount(S) { return S.parts.reduce(function (a, pt) { return a + pt.count; }, 0); }
+  function setSubjects(S) { return S.parts.map(function (pt) { return pt.subject; }); }
+  function setSubjLabel(S) { return setSubjects(S).map(function (x) { return SUBJ_DISP[x]; }).join("＋"); }
+  // v1 で保存した途中経過（set: "keikaku-practice"、setKey なし）も読めるようにする
+  function sessionSetKey(es) {
+    if (es && es.setKey && EXAM_SETS[es.setKey]) return es.setKey;
+    if (es && es.set === "sekou-practice") return "sekou";
+    return "keikaku";
+  }
+  function examPool(subject) {
+    return Q.filter(function (q) { return q.subject === subject && q.choicesComplete; });
+  }
+  // 1年分そのままで組める年度（すべての科目がその年に必要数そろっている年）
+  function examYears(key) {
+    var S = examSetOf(key);
+    var ys = yearsOf(setSubjects(S));
+    return ys.filter(function (y) {
+      return S.parts.every(function (pt) { return examPool(pt.subject).filter(function (q) { return q.year === y; }).length >= pt.count; });
+    });
+  }
+  function examMissing(key) {
+    return setSubjects(examSetOf(key)).filter(function (x) { return !subjQs(x).length; });
+  }
+  function examAvailable(key) {
+    var S = examSetOf(key);
+    return S.parts.every(function (pt) { return examPool(pt.subject).length >= pt.count; });
+  }
+  function examUnavailReason(key) {
+    var S = examSetOf(key), miss = examMissing(key);
+    var r = miss.length ? miss.map(function (x) { return SUBJ_DISP[x]; }).join("・") + "が未収録のため不可。" : "4肢そろいの問題が足りないため不可。";
+    if (S.fallback) {
+      var fbOk = S.parts.some(function (pt) { return examPool(pt.subject).length >= pt.count; });
+      if (fbOk) r += S.fallback;
     }
-    picked.sort(function (a, b) { return a.year - b.year || a.number - b.number; });
-    if (picked.length < EXAM_COUNT) { toast("20問そろわない"); return; }
+    return r;
+  }
+  function examTimeText(S) {
+    return S.prorated ? S.min + "分（按分・目安）" : S.min + "分（公式の時間）";
+  }
+  function examPickText(S) {
+    if (S.parts.length > 1) {
+      return "1年分そのまま（その年の" + S.parts.map(function (pt) { return SUBJ_DISP[pt.subject] + pt.count; }).join("＋") + "）、または複数年から科目ごとにランダムに選んで合わせて" + setCount(S) + "問。";
+    }
+    return "1年分そのまま、または複数年からランダム" + setCount(S) + "問。";
+  }
+  function chooseExamSet(key) {
+    if (!EXAM_SETS[key]) return;
+    examSetup.set = key;
+    var ys = examYears(key);
+    if (!ys.length) ys = yearsOf(setSubjects(EXAM_SETS[key]));
+    if (ys.length && ys.indexOf(examSetup.year) < 0) examSetup.year = ys[ys.length - 1];
+    if (ys.length && !examSetup.yearTouched) examSetup.year = ys[ys.length - 1];
+    examSetup.years = examSetup.years.filter(function (y) { return ys.indexOf(y) >= 0; });
+  }
+  function startExam() {
+    var key = examSetup.set, S = examSetOf(key);
+    if (!examAvailable(key)) { toast("このセットはまだ選べない"); return; }
+    var picked = [], short = false;
+    S.parts.forEach(function (pt) {
+      var pool = examPool(pt.subject), sel;
+      if (examSetup.mode === "year") {
+        sel = pool.filter(function (q) { return q.year === examSetup.year; });
+        sel.sort(function (a, b) { return a.number - b.number; });
+      } else {
+        var ys = examSetup.years.length ? examSetup.years : yearsOf([pt.subject]);
+        sel = shuffle(pool.filter(function (q) { return ys.indexOf(q.year) >= 0; }));
+      }
+      if (sel.length < pt.count) short = true;
+      picked = picked.concat(sel.slice(0, pt.count));
+    });
+    if (short) { toast(setCount(S) + "問そろわない"); return; }
+    // 本番の冊子と同じく科目順、その中で年度・問題番号順
+    picked.sort(function (a, b) {
+      return SUBJ_ORDER.indexOf(a.subject) - SUBJ_ORDER.indexOf(b.subject) || a.year - b.year || a.number - b.number;
+    });
     var now = Date.now();
+    var subjLabel = setSubjLabel(S);
     examSession = {
-      set: "keikaku-practice",
-      label: examSetup.mode === "year" ? "計画 " + examSetup.year + "年（1年分）" : "計画 複数年ランダム（" + (examSetup.years.length ? examSetup.years.slice().sort().join(",") : "全年度") + "）",
+      set: key === "keikaku" || key === "sekou" ? key + "-practice" : key,
+      setKey: key,
+      subject: S.parts[0].subject,
+      subjects: setSubjects(S),
+      label: examSetup.mode === "year" ? subjLabel + " " + examSetup.year + "年（1年分）" : subjLabel + " 複数年ランダム（" + (examSetup.years.length ? examSetup.years.slice().sort().join(",") : "全年度") + "）",
       qids: picked.map(function (q) { return q.id; }),
       answers: {},
       unsure: {},
       idx: 0,
       startedAt: now,
-      endsAt: now + EXAM_MIN * 60000,
-      durationMin: EXAM_MIN
+      endsAt: now + S.min * 60000,
+      durationMin: S.min
     };
     examResult = null;
     saveExam();
@@ -1168,7 +1250,14 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     });
     if (answered) addDaily(answered, corr);
     saveProgress(); saveDaily();
+    var rkey = sessionSetKey(es);
+    var parts = [];
+    SUBJ_ORDER.forEach(function (sj) {
+      var its = items.filter(function (it) { return QMAP[it.id] && QMAP[it.id].subject === sj; });
+      if (its.length) parts.push({ subject: sj, score: its.filter(function (it) { return it.ok; }).length, total: its.length });
+    });
     examResult = {
+      setKey: rkey, parts: parts, durationMin: es.durationMin || examSetOf(rkey).min,
       label: es.label, score: score, total: es.qids.length, answered: answered,
       usedMs: Math.min(Date.now(), es.endsAt) - es.startedAt, timeUp: !!timeUp, items: items
     };
@@ -1197,22 +1286,38 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     if (examResult) { el.innerHTML = renderExamResult(); return; }
     // 入口
     var h = '<div class="notice">本番モードは時間を計って通しで解く。解答中は正誤を出さず、終了後にまとめて採点する。途中終了もできる。</div>';
+    if (!examAvailable(examSetup.set)) chooseExamSet(EXAM_SET_ORDER.filter(examAvailable)[0] || "keikaku");
+    var S = examSetOf(examSetup.set);
     h += '<div class="section-h"><h2>いまできるセット</h2></div><div class="card padded">';
-    h += '<div class="subj-h"><span class="n">計画のみ（練習）</span><span class="s">20問・60分</span></div>';
-    h += '<p class="note">60分は按分した目安。公式は学科Ⅰ・Ⅱを合わせて2時間で40問。公式は合算時間。按分は目安。</p>';
+    h += '<div class="field-label">セット</div><div class="tgls">';
+    EXAM_SET_ORDER.forEach(function (k) {
+      if (!examAvailable(k)) return;
+      h += '<button type="button" class="tgl' + (examSetup.set === k ? " on" : "") + '" data-act="ex-set" data-v="' + k + '">' + esc(EXAM_SETS[k].name) + "</button>";
+    });
+    h += "</div>";
+    h += '<div class="subj-h" style="margin-top:12px"><span class="n">' + esc(S.name) + '</span><span class="s">' + setCount(S) + "問・" + S.min + "分</span></div>";
+    h += '<p class="note">' + (S.prorated ? S.min + "分は按分した目安。" : S.min + "分は公式の合算時間（按分ではない）。") + esc(S.official) + "</p>";
     h += '<div class="field-label">年度の選び方</div><div class="seg"><button type="button" class="' + (examSetup.mode === "year" ? "on" : "") + '" data-act="ex-mode" data-v="year">1年分そのまま</button><button type="button" class="' + (examSetup.mode === "mix" ? "on" : "") + '" data-act="ex-mode" data-v="mix">複数年からランダム</button></div>';
-    var ys = yearsOf(["計画"]);
+    var ys = examYears(examSetup.set);
     if (examSetup.mode === "year") {
       h += '<div class="field-label">年度</div><div class="tgls">';
       ys.forEach(function (y) { h += '<button type="button" class="tgl mini' + (examSetup.year === y ? " on" : "") + '" data-act="ex-year" data-v="' + y + '">' + y + "</button>"; });
       h += "</div>";
+      if (S.parts.length > 1) h += '<p class="note">その年の' + S.parts.map(function (pt) { return SUBJ_DISP[pt.subject] + pt.count + "問"; }).join("＋") + "。</p>";
     } else {
       h += '<div class="field-label"><span>混ぜる年度（未選択はすべて）</span></div><div class="tgls">';
-      ys.forEach(function (y) { h += '<button type="button" class="tgl mini' + (examSetup.years.indexOf(y) >= 0 ? " on" : "") + '" data-act="ex-years" data-v="' + y + '">' + y + "</button>"; });
-      h += '</div><p class="note">ランダムに20問選び、年度・問題番号順に並べる。</p>';
+      yearsOf(setSubjects(S)).forEach(function (y) { h += '<button type="button" class="tgl mini' + (examSetup.years.indexOf(y) >= 0 ? " on" : "") + '" data-act="ex-years" data-v="' + y + '">' + y + "</button>"; });
+      h += "</div>";
+      h += '<p class="note">' + (S.parts.length > 1
+        ? "科目ごとにランダムに選び（" + S.parts.map(function (pt) { return SUBJ_DISP[pt.subject] + pt.count + "問"; }).join("・") + "）、科目・年度・問題番号順に並べる。"
+        : "ランダムに" + setCount(S) + "問選び、年度・問題番号順に並べる。") + "</p>";
     }
-    h += '<div class="btn-row"><button type="button" class="primary" data-act="ex-start">' + SVG.timer + "開始する（60分）</button></div>";
-    h += '<p class="note">結果は科目内の点数と、基本水準（11点）に届いたか。記録は通常の進捗と今日のノルマにも足す。</p></div>';
+    h += '<div class="btn-row"><button type="button" class="primary" data-act="ex-start">' + SVG.timer + "開始する（" + S.min + "分）</button></div>";
+    var basics = S.parts.map(function (pt) { return BASIC_CUTOFF[pt.subject]; });
+    var sameBasic = basics.every(function (b) { return b === basics[0]; });
+    h += '<p class="note">' + (S.parts.length > 1
+      ? "結果は" + S.parts.map(function (pt) { return SUBJ_DISP[pt.subject]; }).join("と") + "それぞれの点数と、基本水準（" + (sameBasic ? "各" + basics[0] + "点" : S.parts.map(function (pt) { return SUBJ_DISP[pt.subject] + BASIC_CUTOFF[pt.subject] + "点"; }).join("・")) + "）に届いたか。合計" + setCount(S) + "点も出す。"
+      : "結果は" + esc(SUBJ_DISP[S.parts[0].subject]) + "の点数と、基本水準（" + BASIC_CUTOFF[S.parts[0].subject] + "点）に届いたか。") + "記録は通常の進捗と今日のノルマにも足す。</p></div>";
     h += '<div class="section-h"><h2>本試験セット</h2></div>';
     h += examSetsHtml(false);
     h += '<p class="note">出題数・時間は建築技術教育普及センターの公式（令和8年まで同じ型）。令和9年の日程・基準は未発表。</p>';
@@ -1223,7 +1328,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     var q = QMAP[es.qids[es.idx]];
     var rem = es.endsAt - Date.now();
     var nAns = Object.keys(es.answers).length;
-    var h = '<div class="exam-bar"><span class="timer' + (rem < 300000 ? " low" : "") + '" id="examRemain">' + mmss(rem) + '</span><div class="eb-mid">' + esc(es.label) + "<br>解答 " + nAns + " / " + es.qids.length + '・按分60分（目安）</div><button type="button" class="danger-btn eb-end" data-act="ex-finish-ask">終了</button></div>';
+    var h = '<div class="exam-bar"><span class="timer' + (rem < 300000 ? " low" : "") + '" id="examRemain">' + mmss(rem) + '</span><div class="eb-mid">' + esc(es.label) + "<br>解答 " + nAns + " / " + es.qids.length + "・" + (examSetOf(sessionSetKey(es)).prorated ? "按分" + (es.durationMin || examSetOf(sessionSetKey(es)).min) + "分（目安）" : "公式" + (es.durationMin || examSetOf(sessionSetKey(es)).min) + "分") + '</div><button type="button" class="danger-btn eb-end" data-act="ex-finish-ask">終了</button></div>';
     h += '<div class="q-top"><span>' + (es.idx + 1) + " / " + es.qids.length + "問</span></div>";
     h += '<div class="card padded">' + renderQHead(q);
     var a = es.answers[q.id];
@@ -1242,13 +1347,17 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
   }
   function renderExamResult() {
     var r = examResult;
-    var basic = BASIC_CUTOFF["計画"], cur = cutoffOf("計画");
+    var parts = r.parts && r.parts.length ? r.parts : [{ subject: r.subject || "計画", score: r.score, total: r.total }];
     var h = '<div class="card padded"><div class="subj-h"><span class="n">結果</span><span class="s">' + esc(r.label) + "</span></div>";
     h += '<div class="big-score" style="margin-top:10px">' + r.score + "<small> / " + r.total + "点</small></div>";
-    h += '<div class="result-banner ' + (r.score >= basic ? "ok" : "ng") + '">' + (r.score >= basic ? SVG.ok : SVG.ng) + "<div><div>基本水準（" + basic + "点）" + (r.score >= basic ? "に到達" : "に未達（あと " + (basic - r.score) + "点）") + '</div><div class="rb-sub">令和9年の公式基準は未発表。基本水準は各科目過半。</div></div></div>';
-    if (cur !== basic) h += '<p class="note">手入力の基準 ' + cur + "点: " + (r.score >= cur ? "到達" : "あと " + (cur - r.score) + "点") + "</p>";
+    h += '<p class="note" style="text-align:center">' + (parts.length > 1 ? "合計（" + parts.map(function (pt) { return esc(SUBJ_DISP[pt.subject]); }).join("＋") + "）" : esc(SUBJ_DISP[parts[0].subject]) + "の点数") + "</p>";
+    parts.forEach(function (pt) {
+      var basic = BASIC_CUTOFF[pt.subject], cur = cutoffOf(pt.subject), ok = pt.score >= basic;
+      h += '<div class="result-banner ' + (ok ? "ok" : "ng") + '" data-subj="' + esc(pt.subject) + '">' + (ok ? SVG.ok : SVG.ng) + "<div><div>" + (parts.length > 1 ? esc(SUBJ_DISP[pt.subject]) + " " + pt.score + " / " + pt.total + "点：" : "") + "基本水準（" + basic + "点）" + (ok ? "に到達" : "に未達（あと " + (basic - pt.score) + "点）") + '</div><div class="rb-sub">令和9年の公式基準は未発表。基本水準は各科目過半。</div></div></div>';
+      if (cur !== basic) h += '<p class="note">' + esc(SUBJ_DISP[pt.subject]) + "の手入力の基準 " + cur + "点: " + (pt.score >= cur ? "到達" : "あと " + (cur - pt.score) + "点") + "</p>";
+    });
     h += '<div class="status-line" style="margin-top:8px"><span>解答した問題</span><span>' + r.answered + " / " + r.total + "問</span></div>";
-    h += '<div class="status-line"><span>使った時間</span><span>' + mmss(r.usedMs) + " / 60:00" + (r.timeUp ? "（時間切れ）" : "") + "</span></div>";
+    h += '<div class="status-line"><span>使った時間</span><span>' + mmss(r.usedMs) + " / " + (r.durationMin || 60) + ":00" + (r.timeUp ? "（時間切れ）" : "") + "</span></div>";
     h += '<p class="note">解答した問題は通常の進捗と今日のノルマに足した。未解答は記録していない。</p>';
     h += '<div class="qgrid">';
     r.items.forEach(function (it, i) {
@@ -1300,7 +1409,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
 
     h += "<h4>合格基準点</h4>";
     h += '<div class="seg"><button type="button" class="' + (settings.cutoffMode === "basic" ? "on" : "") + '" data-act="set-cmode" data-v="basic">基本水準</button><button type="button" class="' + (settings.cutoffMode === "manual" ? "on" : "") + '" data-act="set-cmode" data-v="manual">手入力</button></div>';
-    h += '<p class="note">令和9年の合格基準点は未発表（試験後に発表）。基本水準は各科目過半（計画11・環境設備11・法規16・構造16・施工13）＋総得点90。</p>';
+    h += '<p class="note">令和9年の合格基準点は未発表（試験後に発表）。基本水準は各科目過半（計画11・環境・設備11・法規16・構造16・施工13）＋総得点90。</p>';
     if (settings.cutoffMode === "manual") {
       h += '<div class="grid3" style="margin-top:6px">';
       SUBJ_ORDER.concat(["総得点"]).forEach(function (k) {
@@ -1321,8 +1430,10 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     h += '<p class="note">記録はこの端末の localStorage だけに保存（解答・自信なし・ノルマ・設定）。外部には送らない。</p>';
 
     h += "<h4>データ</h4>";
-    h += '<p class="note">問題データ: ' + (DATA ? esc(DATA.generatedAt) + "・" + Q.length + "問（計画 " + subjQs("計画").length + "・施工 " + subjQs("施工").length + "）" : "未読み込み") + "</p>";
-    h += '<p class="note">環境・設備／法規／構造は未収録。施工は4肢そろいが ' + Q.filter(function (q) { return q.subject === "施工" && q.choicesComplete; }).length + "問。</p>";
+    h += '<p class="note">問題データ: ' + (DATA ? esc(DATA.generatedAt) + "・" + Q.length + "問（" + recordedSubjects().map(function (x) { return SUBJ_DISP[x] + " " + subjQs(x).length; }).join("・") + "）" : "未読み込み") + "</p>";
+    var unrecS = SUBJ_ORDER.filter(function (x) { return !subjQs(x).length; });
+    h += '<p class="note">' + (unrecS.length ? "未収録: " + esc(unrecS.map(function (x) { return SUBJ_DISP[x]; }).join("／")) + "。" : "全科目収録済み。") + "</p>";
+    h += '<p class="note">' + recordedSubjects().map(function (x) { return esc(SUBJ_DISP[x]) + "は4肢そろいが " + Q.filter(function (q) { return q.subject === x && q.choicesComplete; }).length + "問"; }).join("。") + "。</p>";
     h += '<p class="note">アプリ ' + APP_VERSION + "</p>";
     openSheet(h);
   }
@@ -1391,14 +1502,15 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
         if (sess.solve && sess.solve.cur && !sess.solve.finished) { switchTab("solve"); break; }
         startSolve(normFilter(settings.lastFilter || defaultFilter()));
         break;
-      case "go-exam": switchTab("exam"); break;
+      case "go-exam":
+        if (v && EXAM_SETS[v] && !examSession) { chooseExamSet(v); examResult = null; }
+        switchTab("exam"); break;
       // 絞り込み
       case "f-subj":
         toggleIn(filt.subjects, v);
         if (!filt.subjects.length) filt.subjects.push(v);
         var fs = fieldsOf(filt.subjects);
         filt.fields = filt.fields.filter(function (x) { return fs.indexOf(x) >= 0; });
-        if (filt.subjects.indexOf("施工") < 0) filt.onlyComplete = false;
         render(); break;
       case "f-year": toggleIn(filt.years, parseInt(v, 10)); render(); break;
       case "f-year-all": filt.years = []; render(); break;
@@ -1438,8 +1550,9 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
         calMonth = yy + "-" + (mm < 10 ? "0" : "") + mm; render(); break;
       case "cal-day": calSel = el.getAttribute("data-d"); render(); break;
       // 本番
+      case "ex-set": chooseExamSet(v); render(); break;
       case "ex-mode": examSetup.mode = v; render(); break;
-      case "ex-year": examSetup.year = parseInt(v, 10); render(); break;
+      case "ex-year": examSetup.year = parseInt(v, 10); examSetup.yearTouched = true; render(); break;
       case "ex-years": toggleIn(examSetup.years, parseInt(v, 10)); render(); break;
       case "ex-start": startExam(); break;
       case "ex-answer":
@@ -1514,8 +1627,7 @@ html[data-theme="dark"] .cal-day.today .cal-num { color: #0b1a24; }
     Q.forEach(function (q) { QMAP[q.id] = q; });
     if (examSession && (!examSession.qids || !examSession.qids.every(function (id) { return QMAP[id]; }))) { examSession = null; saveExam(); }
     filt = normFilter(settings.lastFilter || defaultFilter());
-    var ys = yearsOf(["計画"]);
-    if (ys.length) examSetup.year = ys[ys.length - 1];
+    chooseExamSet("keikaku");
     if (examSession && examSession.endsAt <= Date.now()) finishExam(true);
     render();
   }).catch(function () {
